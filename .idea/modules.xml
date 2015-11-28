@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app4/app4.iml" filepath="$PROJECT_DIR$/app4/app4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loginactivity/loginactivity.iml" filepath="$PROJECT_DIR$/loginactivity/loginactivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/umeng_third_login/umeng_third_login.iml" filepath="$PROJECT_DIR$/umeng_third_login/umeng_third_login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xiaobaiju2.iml" filepath="$PROJECT_DIR$/xiaobaiju2.iml" />
+    </modules>
+  </component>
+</project>
