@@ -56,4 +56,5 @@ dependencies {
     compile files('libs/SocialSDK_yixin_1.jar')
     compile files('libs/SocialSDK_yixin_2.jar')
     compile files('libs/SocialSDK_ynote.jar')
+    compile files('libs/volley.jar')
 }

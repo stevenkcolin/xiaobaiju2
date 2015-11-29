@@ -29,4 +29,37 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="21dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get BAIDU API"
+        android:id="@+id/btn_get_api"
+        android:layout_below="@+id/btn_sina_login"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="26dp"
+        android:onClick="onClickGetAPI" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get User Info"
+        android:id="@+id/btn_get_user_info"
+        android:layout_below="@+id/btn_get_api"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp"
+        android:onClick="getUserInfo" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post Info"
+        android:id="@+id/btn_post_info"
+        android:layout_below="@+id/btn_get_user_info"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp"
+        android:onClick="postUserInfo" />
+
 </RelativeLayout>

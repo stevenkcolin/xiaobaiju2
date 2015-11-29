@@ -124,6 +124,7 @@
     <orderEntry type="library" exported="" name="SocialSDK_AtFriends" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_shake" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_scrshot" level="project" />
+    <orderEntry type="library" exported="" name="volley" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_yixin_1" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_yixin_2" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_sms" level="project" />

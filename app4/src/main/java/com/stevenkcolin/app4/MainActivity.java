@@ -11,8 +11,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
@@ -24,6 +35,10 @@ import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -32,6 +47,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             .getUMSocialService(Constants.DESCRIPTOR);
     private Button qqLoginButton;
     private Button sinaLoginButton;
+
+    private TextView mTextView;
 
 
     @Override
@@ -44,6 +61,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         sinaLoginButton = (Button) this.findViewById(R.id.btn_sina_login);
         sinaLoginButton.setOnClickListener(this);
+
+        mTextView= (TextView) findViewById(R.id.textView);
 
         configPlatforms();
     }
@@ -254,5 +273,131 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    public void onClickGetAPI(View v){
+        // TODO: 11/28/15
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://www.baidu.com";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        mTextView.setText("Response is: "+ response.substring(0, 500));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mTextView.setText("That didn't work!");
+            }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
+    public void getUserInfo (View v){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://www.stevenkcolin.com:3000/user";
+
+        StringRequest stringRequest = new StringRequest(url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("TAG", response);
+                        mTextView.setText("Response is: "+ response.toString());
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", error.getMessage(), error);
+            }
+        });
+        queue.add(stringRequest);
+        }
+
+
+    public void postUserInfo (View v){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://www.stevenkcolin.com:3000/user/create";
+
+        JSONObject js = new JSONObject();
+        try {
+//            JSONObject jsonobject_one = new JSONObject();
+//
+//            jsonobject_one.put("phone", "1234567890");
+//            jsonobject_one.put("password", "123456");
+
+            //js.put("data", jsonobject_one.toString());
+
+            js.put("phone", "123456789333");
+            js.put("password", "123456");
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST,url, js,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("TAG", response.toString());
+
+                        //msgResponse.setText(response.toString());
+                        //hideProgressDialog();
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", "Error: " + error.getMessage());
+                //hideProgressDialog();
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+    };
+
+        queue.add(jsonObjReq);
+
+
+    }
+
+    private Response.Listener<String> responseListener() {
+        return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG", response.toString());
+                Log.e("TAG",response);
+            }
+        };
+    }
+
+
+
+    protected Response.ErrorListener errorListener() {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG", error.getMessage(),error);
+            }
+        };
+    }
 
 }
+
+
+
+
+
