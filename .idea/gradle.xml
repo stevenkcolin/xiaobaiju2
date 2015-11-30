@@ -9,9 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app4" />
-            <option value="$PROJECT_DIR$/loginactivity" />
-            <option value="$PROJECT_DIR$/umeng_third_login" />
+            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
       </GradleProjectSettings>

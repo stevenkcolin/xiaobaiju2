@@ -1,2 +1,1 @@
-include ':loginactivity', ':app4'
-include ':umeng_third_login'
+include ':app'
