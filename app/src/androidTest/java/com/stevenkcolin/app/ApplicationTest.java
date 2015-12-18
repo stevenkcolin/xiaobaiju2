@@ -1,4 +1,4 @@
-package com.stevenkcolin.app4;
+package com.stevenkcolin.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

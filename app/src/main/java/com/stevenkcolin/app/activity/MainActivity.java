@@ -1,54 +1,21 @@
-package com.stevenkcolin.app4;
+package com.stevenkcolin.app.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.SyncStateContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.bean.StatusCode;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
-import com.umeng.socialize.sso.UMSsoHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.stevenkcolin.app.R;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
-    private UMSocialService mController = UMServiceFactory
-            .getUMSocialService(Constants.DESCRIPTOR);
-    private Button qqLoginButton;
-    private Button sinaLoginButton;
-
-    private TextView mTextView;
+    private TextView btnRegister;
+    private EditText editPhone;
+    private EditText editPwd;
 
 
     @Override
@@ -56,57 +23,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        qqLoginButton = (Button) this.findViewById(R.id.btn_qq_login);
-        qqLoginButton.setOnClickListener(this);
+        editPhone = (EditText) this.findViewById(R.id.edit_login_phone);
 
-        sinaLoginButton = (Button) this.findViewById(R.id.btn_sina_login);
-        sinaLoginButton.setOnClickListener(this);
+        editPwd = (EditText) this.findViewById(R.id.edit_login_pwd);
 
-        mTextView= (TextView) findViewById(R.id.textView);
-
-        configPlatforms();
+        btnRegister = (TextView) this.findViewById(R.id.btn_login_register);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction("wjh.android.action.otheractivity");
+                startActivity(intent);
+            }
+        });
     }
-
-    private void configPlatforms() {
-        // 添加新浪sso授权
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
-//        // 添加腾讯微博SSO授权
-//        mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
-//        // 添加人人网SSO授权
-//        RenrenSsoHandler renrenSsoHandler = new RenrenSsoHandler(
-//                LoginActivity.this, "201874",
-//                "28401c0964f04a72a14c812d6132fcef",
-//                "3bf66e42db1e4fa9829b955cc300b737");
-//        mController.getConfig().setSsoHandler(renrenSsoHandler);
-
-        // 添加QQ、QZone平台
-        addQQQZonePlatform();
-
-
-    }
-
-    /**
-     * @功能描述 : 添加QQ平台支持 QQ分享的内容， 包含四种类型， 即单纯的文字、图片、音乐、视频. 参数说明 : title, summary,
-     *       image url中必须至少设置一个, targetUrl必须设置,网页地址必须以"http://"开头 . title :
-     *       要分享标题 summary : 要分享的文字概述 image url : 图片地址 [以上三个参数至少填写一个] targetUrl
-     *       : 用户点击该分享时跳转到的目标地址 [必填] ( 若不填写则默认设置为友盟主页 )
-     * @return
-     */
-    private void addQQQZonePlatform() {
-        String appId = "100424468";
-        String appKey = "c7394704798a158208a74ab60104f0ba";
-        // 添加QQ支持, 并且设置QQ分享内容的target url
-        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(MainActivity.this,
-                appId, appKey);
-        qqSsoHandler.setTargetUrl("http://www.umeng.com");
-        qqSsoHandler.addToSocialSDK();
-
-//         添加QZone平台
-//        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(
-//                LoginActivity.this, appId, appKey);
-//        qZoneSsoHandler.addToSocialSDK();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,38 +62,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_sina_login: // 新浪微博登录
-                login(SHARE_MEDIA.SINA);
-                break;
-            case R.id.btn_qq_login: // qq登录
-                login(SHARE_MEDIA.QQ);
-                break;
-//            case R.id.btn_wechat_login: // 微信登陆
-//                login(SHARE_MEDIA.WEIXIN);
-//                break;
-//            case R.id.btn_share: // 一键分享
-//                addCustomPlatforms();
-//                break;
-//            case R.id.btn_sina_logout: // 注销新浪账号
-//                logout(SHARE_MEDIA.SINA);
-//                break;
-//            case R.id.btn_qq_logout: // 注销qq账号
-//                logout(SHARE_MEDIA.QQ);
-//                break;
-//            case R.id.btn_wechat_logout:
-//                logout(SHARE_MEDIA.WEIXIN); // 注销微信账号
-//                break;
-            default:
-                break;
-        }
+
     }
 
     /**
      * 授权。如果授权成功，则获取用户信息
      *
      * @param platform
-     */
+     *//*
     private void login(final SHARE_MEDIA platform) {
         mController.doOauthVerify(this, platform,
                 new SocializeListeners.UMAuthListener() {
@@ -203,11 +109,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 });
     }
 
-    /**
+    *//**
      * 获取用户信息
      *
      * @param platform
-     */
+     *//*
     private void getUserInfo(SHARE_MEDIA platform) {
         mController.getPlatformInfo(MainActivity.this, platform,
                 new SocializeListeners.UMDataListener() {
@@ -237,10 +143,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 });
     }
 
-    /**
+    *//**
      * 注销本次登陆
      * @param platform
-     */
+     *//*
     private void logout(final SHARE_MEDIA platform) {
         mController.deleteOauth(MainActivity.this, platform, new SocializeListeners.SocializeClientListener() {
 
@@ -358,9 +264,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         }) {
 
-            /**
+            *//**
              * Passing some request headers
-             * */
+             * *//*
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -394,10 +300,5 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         };
     }
-
+*/
 }
-
-
-
-
-
