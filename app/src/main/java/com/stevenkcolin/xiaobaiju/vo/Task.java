@@ -7,8 +7,7 @@ import java.util.Date;
 /**
  * Created by Pengfei on 2015/12/11.
  */
-public class Task extends SugarRecord<Task> {
-    private Long id;
+public class Task extends SugarRecord {
     private String _id;
     private String title;
     private String descrption;
@@ -19,13 +18,12 @@ public class Task extends SugarRecord<Task> {
         super();
     }
 
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Task(String title, String descrption, Date dueDate, boolean completed, String _id) {
+        this.title = title;
+        this.descrption = descrption;
+        this.dueDate = dueDate;
+        this.completed = completed;
+        this._id = _id;
     }
 
     public String get_id() {

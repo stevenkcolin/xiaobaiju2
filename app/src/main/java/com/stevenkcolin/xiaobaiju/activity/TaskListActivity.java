@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.adapter.TaskListAdapter;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
+import com.stevenkcolin.xiaobaiju.dao.TaskDao;
 import com.stevenkcolin.xiaobaiju.exception.ServerException;
 import com.stevenkcolin.xiaobaiju.util.DateUtil;
-import com.stevenkcolin.xiaobaiju.util.DialogUtil;
 import com.stevenkcolin.xiaobaiju.util.HttpUtil;
 import com.stevenkcolin.xiaobaiju.vo.Task;
 
@@ -41,8 +41,9 @@ public class TaskListActivity extends BaseActivity {
         setContentView(R.layout.activity_task_list);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-        progressDialog = DialogUtil.showWaitDialog(TaskListActivity.this, getString(R.string.please_wait));
-        new loadTasks().execute();
+//        progressDialog = DialogUtil.showWaitDialog(TaskListActivity.this, getString(R.string.please_wait));
+//        new loadTasks().execute();
+        getTaskListFromDB();
     }
 
     @Override
@@ -61,6 +62,13 @@ public class TaskListActivity extends BaseActivity {
             default:
         }
         return true;
+    }
+
+    public void getTaskListFromDB() {
+        List<Task> taskList = TaskDao.getTaskList();
+        TaskListAdapter adapter = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskList);
+        ListView listView = (ListView)findViewById(R.id.task_list);
+        listView.setAdapter(adapter);
     }
 
     class loadTasks extends AsyncTask<Void, Void, Boolean> {
