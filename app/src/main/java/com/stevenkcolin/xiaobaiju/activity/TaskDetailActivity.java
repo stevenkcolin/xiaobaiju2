@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.dao.TaskDao;
 import com.stevenkcolin.xiaobaiju.vo.Task;
 
 /**
@@ -19,6 +20,9 @@ public class TaskDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
+
+        editTitle = (EditText)findViewById(R.id.task_title);
+        editDesc = (EditText)findViewById(R.id.task_description);
     }
 
     @Override
@@ -34,7 +38,7 @@ public class TaskDetailActivity extends BaseActivity {
                 Task task = new Task();
                 task.setTitle(editTitle.getText().toString());
                 task.setDescrption(editDesc.getText().toString());
-                task.save();
+                TaskDao.save(task);
             default:
         }
         return true;
