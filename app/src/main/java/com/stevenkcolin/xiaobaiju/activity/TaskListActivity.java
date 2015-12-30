@@ -39,12 +39,16 @@ public class TaskListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        progressDialog = DialogUtil.showWaitDialog(TaskListActivity.this, getString(R.string.please_wait));
-//        new loadTasks().execute();
         getTaskListFromDB();
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        getTaskListFromDB();
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

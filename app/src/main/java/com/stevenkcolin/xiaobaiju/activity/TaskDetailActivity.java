@@ -1,6 +1,7 @@
 package com.stevenkcolin.xiaobaiju.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -35,12 +36,23 @@ public class TaskDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_task:
-                Task task = new Task();
-                task.setTitle(editTitle.getText().toString());
-                task.setDescrption(editDesc.getText().toString());
-                TaskDao.save(task);
+
+                String title = editTitle.getText().toString();
+                String desc = editDesc.getText().toString();
+                Task task = new Task(title,desc);
+                try
+                {
+                    //TaskDao.save(task);
+                    task.save();
+                }
+                catch (Exception e)
+                {
+                    Log.e("Error", "onOptionsItemSelected "+e.getMessage());
+                }
             default:
         }
+        this.finish();
+
         return true;
     }
 }

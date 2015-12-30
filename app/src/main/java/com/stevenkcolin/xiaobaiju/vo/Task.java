@@ -1,6 +1,9 @@
 package com.stevenkcolin.xiaobaiju.vo;
 
+import android.text.method.DateTimeKeyListener;
+
 import com.orm.SugarRecord;
+import com.stevenkcolin.xiaobaiju.util.DateUtil;
 
 import java.util.Date;
 
@@ -8,11 +11,11 @@ import java.util.Date;
  * Created by Pengfei on 2015/12/11.
  */
 public class Task extends SugarRecord {
-    private String _id;
-    private String title;
-    private String descrption;
-    private Date dueDate;
-    private boolean completed;
+    private String _id="-1";
+    private String title="";
+    private String descrption="";
+    private Date dueDate= new Date();
+    private boolean completed=false;
 
     public Task() {
         super();
@@ -24,6 +27,12 @@ public class Task extends SugarRecord {
         this.dueDate = dueDate;
         this.completed = completed;
         this._id = _id;
+    }
+
+    public Task(String title,String descrption)
+    {
+        this.title = title;
+        this.descrption = descrption;
     }
 
     public String get_id() {
