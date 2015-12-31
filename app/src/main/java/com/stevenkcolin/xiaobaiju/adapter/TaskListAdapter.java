@@ -43,7 +43,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         viewHolder.checkCompleted.setText(task.getTitle());
         viewHolder.checkCompleted.setChecked(task.isCompleted());
         if (task.getDueDate() != null) {
-            viewHolder.textDueDate.setText(DateUtil.toLocalString(task.getDueDate()));
+
+            viewHolder.textDueDate.setText(DateUtil.toLocalStringDateMonth(task.getDueDate()));
         }
         return view;
     }
