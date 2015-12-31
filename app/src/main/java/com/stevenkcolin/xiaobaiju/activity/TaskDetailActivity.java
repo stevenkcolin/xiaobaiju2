@@ -23,7 +23,14 @@ public class TaskDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_task_detail);
 
         editTitle = (EditText)findViewById(R.id.task_title);
-        editDesc = (EditText)findViewById(R.id.task_description);
+//        editDesc = (EditText)findViewById(R.id.task_description);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        saveData();
     }
 
     @Override
@@ -36,23 +43,27 @@ public class TaskDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_task:
-
-                String title = editTitle.getText().toString();
-                String desc = editDesc.getText().toString();
-                Task task = new Task(title,desc);
-                try
-                {
-                    //TaskDao.save(task);
-                    task.save();
-                }
-                catch (Exception e)
-                {
-                    Log.e("Error", "onOptionsItemSelected "+e.getMessage());
-                }
+                saveData();
             default:
         }
         this.finish();
 
         return true;
+    }
+    private void saveData()
+    {
+        String title = editTitle.getText().toString();
+        String desc = "";
+        if (title.trim().length()>0) {
+
+            Task task = new Task(title, desc);
+            try {
+                //TaskDao.save(task);
+                task.save();
+            } catch (Exception e) {
+                Log.e("Error", "onOptionsItemSelected " + e.getMessage());
+            }
+        }
+
     }
 }

@@ -33,4 +33,5 @@
     <!-- General Error -->
     <string name="error_server">服务器错误</string>
     <string name="error_network">网络错误</string>
+    <string name="menu_back_task">返回</string>
 </resources>
