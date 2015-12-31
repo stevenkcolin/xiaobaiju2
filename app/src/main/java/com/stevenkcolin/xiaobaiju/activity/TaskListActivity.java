@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,6 +42,14 @@ public class TaskListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         getTaskListFromDB();
+
+        final Button mButton = (Button) findViewById(R.id.add_task2);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTask();
+            }
+        });
     }
 
     @Override
@@ -60,12 +70,19 @@ public class TaskListActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_task:
-                Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-                intent.setAction("add");
-                startActivityForResult(intent, TASK_ADD);
+//                Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
+//                intent.setAction("add");
+//                startActivityForResult(intent, TASK_ADD);
+                return true;
             default:
         }
         return true;
+    }
+
+    public void addTask(){
+        Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
+        intent.setAction("add");
+        startActivityForResult(intent, TASK_ADD);
     }
 
     public void getTaskListFromDB() {
