@@ -41,8 +41,9 @@ public class TaskListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+        //读取task列表，并显示在task list中
         getTaskListFromDB();
-
+        //给圆形buttonadd task, 添加私有方法addTask(),实现添加task
         final Button mButton = (Button) findViewById(R.id.add_task);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +53,12 @@ public class TaskListActivity extends BaseActivity {
         });
     }
 
+    //实现从taskDetail返回父窗口时候，刷新task list页面
     @Override
     protected void onResume(){
         super.onResume();
         getTaskListFromDB();
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,26 +70,27 @@ public class TaskListActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                //add settings code;
+                //add settings code
                 return true;
             default:
         }
         return true;
     }
-
-    public void addTask(){
+    //添加task，并launch TaskDetailActivity
+    private void addTask(){
         Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
         intent.setAction("add");
         startActivityForResult(intent, TASK_ADD);
     }
-
-    public void getTaskListFromDB() {
+    //获取Task list, 并且展现在task list中
+    private void getTaskListFromDB() {
         List<Task> taskList = TaskDao.getTaskList();
         TaskListAdapter adapter = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskList);
         ListView listView = (ListView)findViewById(R.id.task_list);
         listView.setAdapter(adapter);
     }
 
+    // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 
     class loadTasks extends AsyncTask<Void, Void, Boolean> {
         String message;
         @Override
