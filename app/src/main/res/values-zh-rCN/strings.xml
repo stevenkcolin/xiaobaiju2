@@ -24,7 +24,7 @@
     </string>
 
     <string name="menu_add_task">添加任务</string>
-    <string name="prompt_task_title">名称</string>
+    <string name="prompt_task_title">任务名称</string>
     <string name="prompt_task_description">描述</string>
 
     <!-- Gener Message -->
@@ -34,4 +34,6 @@
     <string name="error_server">服务器错误</string>
     <string name="error_network">网络错误</string>
     <string name="menu_back_task">返回</string>
+    <string name="app_settings">设置</string>
+    <string name="txt_plus_btn">+</string>
 </resources>

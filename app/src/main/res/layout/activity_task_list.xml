@@ -18,21 +18,18 @@
     <ListView
         android:id="@+id/task_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_horizontal_margin">
     </ListView>
-
-
-
-
     <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/plus_button_width"
+        android:layout_height="@dimen/plus_button_height"
         android:background="@drawable/roundedbutton"
-        android:text="+"
+        android:text="@string/txt_plus_btn"
         android:textColor="@color/colorBackground"
-        android:id="@+id/add_task2"
+        android:id="@+id/add_task"
         android:layout_gravity="right"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="80dp"
-        android:textSize="@dimen/abc_dialog_padding_material" />
+        android:layout_marginRight="@dimen/plus_button_margin_right"
+        android:layout_marginBottom="@dimen/plus_button_margin_bottom"
+        android:textSize="@dimen/plus_button_size" />
 </LinearLayout>

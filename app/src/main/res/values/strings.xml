@@ -15,4 +15,19 @@
         completions."
     </string>
     <string name="menu_back_task">back</string>
+    <string name="app_settings">settings</string>
+    <string name="error_duplicated_phone">the phone number is registered</string>
+    <string name="error_empty_confirmPwd">empty confirmPwd</string>
+    <string name="error_empty_password">empty password</string>
+    <string name="error_empty_phone">empty phone</string>
+    <string name="error_invalid_account">invalid account</string>
+    <string name="error_network">error network</string>
+    <string name="error_notequal_pwd">error password not equal</string>
+    <string name="error_server">server error</string>
+    <string name="info_register_success">Register Succeed!</string>
+    <string name="menu_add_task">Add Task</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="prompt_task_title">task title</string>
+    <string name="prompt_task_description">task descrption</string>
+    <string name="txt_plus_btn">+</string>
 </resources>

@@ -43,7 +43,7 @@ public class TaskListActivity extends BaseActivity {
         setContentView(R.layout.activity_task_list);
         getTaskListFromDB();
 
-        final Button mButton = (Button) findViewById(R.id.add_task2);
+        final Button mButton = (Button) findViewById(R.id.add_task);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +69,8 @@ public class TaskListActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_task:
-//                Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-//                intent.setAction("add");
-//                startActivityForResult(intent, TASK_ADD);
+            case R.id.settings:
+                //add settings code;
                 return true;
             default:
         }
