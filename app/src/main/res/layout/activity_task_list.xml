@@ -18,7 +18,7 @@
     <ListView
         android:id="@+id/task_list"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin">
     </ListView>
     <View
@@ -28,7 +28,7 @@
     <ListView
         android:id="@+id/task_listComp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin">
     </ListView>
     <Button

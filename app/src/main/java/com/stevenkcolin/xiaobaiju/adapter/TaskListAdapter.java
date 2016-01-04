@@ -60,10 +60,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
                     task.setCompleted(status);
                     task.save();
 
-                    // TODO: 1/4/16 添加点击后刷新ListView的代码 
-
-
-
+                    // TODO: 1/4/16 添加点击后刷新ListView的代码
                 }
             });
 
