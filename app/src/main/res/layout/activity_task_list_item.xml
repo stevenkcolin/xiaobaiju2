@@ -10,7 +10,8 @@
         android:layout_width="@dimen/task_detal_chk_width"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="aa"/>
+        android:text="aa"
+        android:clickable="false" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
