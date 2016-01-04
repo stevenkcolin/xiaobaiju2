@@ -73,22 +73,32 @@ public class TaskListActivity extends BaseActivity {
             case R.id.settings:
                 //add settings code
                 return true;
+            case R.id.refresh:
+                getTaskListFromDB();
+                return true;
             default:
         }
         return true;
     }
     //添加task，并launch TaskDetailActivity
-    private void addTask(){
+    public void addTask(){
         Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
         intent.setAction("add");
         startActivityForResult(intent, TASK_ADD);
     }
     //获取Task list, 并且展现在task list中
-    private void getTaskListFromDB() {
-        List<Task> taskList = TaskDao.getTaskList();
+    public void getTaskListFromDB() {
+        //加载未完成的task
+        List<Task> taskList = TaskDao.getTaskUncompleted();
         TaskListAdapter adapter = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskList);
         ListView listView = (ListView)findViewById(R.id.task_list);
         listView.setAdapter(adapter);
+
+        //加载已完成的task
+        List<Task> taskListComp = TaskDao.getTaskCompleted();
+        TaskListAdapter adapterComp = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskListComp);
+        ListView listViewComp = (ListView)findViewById(R.id.task_listComp);
+        listViewComp.setAdapter(adapterComp);
     }
 
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 

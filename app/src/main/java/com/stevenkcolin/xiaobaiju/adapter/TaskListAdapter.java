@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.activity.BaseActivity;
@@ -55,6 +57,13 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
                     {
                         viewHolder.checkCompleted.setPaintFlags(0);
                     }
+                    task.setCompleted(status);
+                    task.save();
+
+                    // TODO: 1/4/16 添加点击后刷新ListView的代码 
+
+
+
                 }
             });
 

@@ -36,4 +36,5 @@
     <string name="menu_back_task">返回</string>
     <string name="app_settings">设置</string>
     <string name="txt_plus_btn">+</string>
+    <string name="app_refresh">刷新</string>
 </resources>

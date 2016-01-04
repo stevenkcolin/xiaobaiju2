@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/refresh"
+        android:title="@string/app_refresh"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/settings"
         android:title="@string/app_settings"
         android:orderInCategory="1"

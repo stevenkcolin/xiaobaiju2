@@ -30,4 +30,5 @@
     <string name="prompt_task_title">task title</string>
     <string name="prompt_task_description">task descrption</string>
     <string name="txt_plus_btn">+</string>
+    <string name="app_refresh">refresh</string>
 </resources>
