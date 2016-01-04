@@ -88,17 +88,12 @@ public class TaskListActivity extends BaseActivity {
     }
     //获取Task list, 并且展现在task list中
     public void getTaskListFromDB() {
-        //加载未完成的task
-        List<Task> taskList = TaskDao.getTaskUncompleted();
+        //加载所有的task
+        List<Task> taskList = TaskDao.getTaskList();
         TaskListAdapter adapter = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskList);
         ListView listView = (ListView)findViewById(R.id.task_list);
         listView.setAdapter(adapter);
-
-        //加载已完成的task
-        List<Task> taskListComp = TaskDao.getTaskCompleted();
-        TaskListAdapter adapterComp = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskListComp);
-        ListView listViewComp = (ListView)findViewById(R.id.task_listComp);
-        listViewComp.setAdapter(adapterComp);
+        adapter.notifyDataSetChanged();
     }
 
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 

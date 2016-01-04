@@ -13,16 +13,6 @@ public class TaskDao {
     }
 
     public static List<Task> getTaskList() {
-        return Task.findWithQuery(Task.class, "select * from Task order by completed desc, due_date desc");
+        return Task.findWithQuery(Task.class, "select * from Task order by completed, due_date desc");
     }
-
-    public static List<Task> getTaskUncompleted() {
-        return Task.findWithQuery(Task.class, "select * from Task where completed=0 order by completed desc, due_date desc");
-    }
-
-    public static List<Task> getTaskCompleted() {
-        return Task.findWithQuery(Task.class, "select * from Task where completed=1 order by completed desc, due_date desc");
-    }
-
-
 }

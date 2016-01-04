@@ -25,12 +25,6 @@
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@android:color/darker_gray"  />
-    <ListView
-        android:id="@+id/task_listComp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin">
-    </ListView>
     <Button
         android:layout_width="@dimen/plus_button_width"
         android:layout_height="@dimen/plus_button_height"
