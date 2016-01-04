@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,10 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin">
     </ListView>
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="@android:color/darker_gray"  />
     <Button
         android:layout_width="@dimen/plus_button_width"
         android:layout_height="@dimen/plus_button_height"
@@ -33,7 +29,11 @@
         android:textColor="@color/colorBackground"
         android:id="@+id/add_task"
         android:layout_gravity="right"
-        android:layout_marginRight="@dimen/plus_button_margin_right"
-        android:layout_marginBottom="@dimen/plus_button_margin_bottom"
-        android:textSize="@dimen/plus_button_size" />
-</LinearLayout>
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/plus_button_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/task_list"
+        android:layout_alignEnd="@+id/task_list"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
+</RelativeLayout>
