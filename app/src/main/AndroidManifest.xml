@@ -15,7 +15,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".activity.LoginActivity" >
+        <activity
+            android:name=".activity.LoginActivity"
+            android:parentActivityName=".activity.TaskListActivity" >
         </activity>
         <activity android:name=".activity.RegisterActivity" />
         <activity
@@ -45,7 +47,7 @@
             android:value="com.stevenkcolin.xiaobaiju.vo" />
 
         <activity
-            android:name=".xiaobaijuSlidingMenu"
+            android:name=".activity.xiaobaijuSlidingMenu"
             android:label="@string/title_activity_xiaobaiju_sliding_menu" >
         </activity>
     </application>

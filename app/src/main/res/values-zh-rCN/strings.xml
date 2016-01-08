@@ -37,4 +37,8 @@
     <string name="app_settings">设置</string>
     <string name="txt_plus_btn">+</string>
     <string name="app_refresh">刷新</string>
+    <string name="action_settings">设置</string>
+    <string name="hello_world">你好世界！</string>
+    <string name="title_activity_xiaobaiju_sliding_menu">左滑菜单</string>
+    <string name="txt_about_us">欢迎访问我们的官方网站: XBJ.Life</string>
 </resources>

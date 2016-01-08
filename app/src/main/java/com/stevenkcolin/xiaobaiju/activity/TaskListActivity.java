@@ -105,8 +105,38 @@ public class TaskListActivity extends BaseActivity {
         slidingMenu.setMode(SlidingMenu.LEFT);//设定模式，SlidingMenu在左边
         slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);//配置slidingmenu偏移出来的尺寸
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//全屏都可以拖拽触摸，打开slidingmenu
-        slidingMenu.attachToActivity(this,SlidingMenu.SLIDING_CONTENT);//附加到当前的Aty上去
+        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);//附加到当前的Aty上去
         slidingMenu.setMenu(R.layout.activity_xiaobaiju_sliding_menu);
+
+        //set loginbutton to open Login Page
+        openLoginPage();
+        
+        //set about_us button to have a toast
+        openAboutUs();
+    }
+
+    //给左侧餐单按钮about_us添加事件，欢迎打开官方网站
+    private void openAboutUs(){
+        findViewById(R.id.about_us).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),R.string.txt_about_us,Toast.LENGTH_SHORT).show();
+                // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。 
+            }
+        });
+    }
+
+    //给左侧菜单按钮login_account添加事件，打开login Page
+    private void openLoginPage(){
+        findViewById(R.id.login_account).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskListActivity.this, LoginActivity.class);
+                intent.setAction("add");
+                startActivityForResult(intent, TASK_ADD);
+
+            }
+        });
     }
 
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 
