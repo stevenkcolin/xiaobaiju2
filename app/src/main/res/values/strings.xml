@@ -31,4 +31,8 @@
     <string name="prompt_task_description">task descrption</string>
     <string name="txt_plus_btn">+</string>
     <string name="app_refresh">refresh</string>
+    <string name="title_activity_xiaobaiju_sliding_menu">xiaobaijuSlidingMenu</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

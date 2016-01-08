@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.adapter.TaskListAdapter;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
@@ -37,6 +38,7 @@ public class TaskListActivity extends BaseActivity {
     private ProgressDialog progressDialog;
 
     private int TASK_ADD = 1;
+    private SlidingMenu slidingMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class TaskListActivity extends BaseActivity {
                 addTask();
             }
         });
+        //添加左滑菜单
+        addSlidingMenu();
     }
 
     //实现从taskDetail返回父窗口时候，刷新task list页面
@@ -94,6 +98,15 @@ public class TaskListActivity extends BaseActivity {
         ListView listView = (ListView)findViewById(R.id.task_list);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+    //添加slidingMenu
+    public void addSlidingMenu(){
+        slidingMenu = new SlidingMenu(this);//创建对象
+        slidingMenu.setMode(SlidingMenu.LEFT);//设定模式，SlidingMenu在左边
+        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);//配置slidingmenu偏移出来的尺寸
+        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//全屏都可以拖拽触摸，打开slidingmenu
+        slidingMenu.attachToActivity(this,SlidingMenu.SLIDING_CONTENT);//附加到当前的Aty上去
+        slidingMenu.setMenu(R.layout.activity_xiaobaiju_sliding_menu);
     }
 
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 
