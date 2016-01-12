@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,12 +20,17 @@ import com.stevenkcolin.xiaobaiju.exception.ServerException;
 import com.stevenkcolin.xiaobaiju.util.DateUtil;
 import com.stevenkcolin.xiaobaiju.util.HttpUtil;
 import com.stevenkcolin.xiaobaiju.vo.Task;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Pengfei on 2015/12/11.
@@ -39,6 +43,7 @@ public class TaskListActivity extends BaseActivity {
 
     private int TASK_ADD = 1;
     private SlidingMenu slidingMenu;
+    private UMShareAPI mShareAPI = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +113,29 @@ public class TaskListActivity extends BaseActivity {
         slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);//附加到当前的Aty上去
         slidingMenu.setMenu(R.layout.activity_xiaobaiju_sliding_menu);
 
+
+        /** init auth api**/
+        try {
+            mShareAPI = UMShareAPI.get(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        //微信    wx12342956d1cab4f9,a5ae111de7d9ea137e88a5e02c07c94d
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        //豆瓣RENREN平台目前只能在服务器端配置
+        //新浪微博
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad");
+        //易信
+        PlatformConfig.setYixin("yxc0614e80c9304c11b0391514d09f13bf");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setTwitter("3aIN7fuF685MuZ7jtXkQxalyi", "MK6FEYG63eWcpDFgRYw4w9puJhzDl0tyuqWjZ3M7XJuuG7mMbO");
+        PlatformConfig.setAlipay("2015111700822536");
+        PlatformConfig.setLaiwang("laiwangd497e70d4", "d497e70d4c3e4efeab1381476bac4c5e");
+        PlatformConfig.setPinterest("1439206");
+
         //set loginbutton to open Login Page
-        openLoginPage();
+        openLoginPage2();
         
         //set about_us button to have a toast
         openAboutUs();
@@ -137,6 +163,56 @@ public class TaskListActivity extends BaseActivity {
 
             }
         });
+    }
+
+    //给左侧菜单按钮login_account添加事件，打开login Page
+    private void openLoginPage2(){
+        findViewById(R.id.login_account).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginQQ(view);
+            }
+        });
+    }
+    //添加登录QQ的代码
+    public void loginQQ(View view) {
+        if (view.getId() == R.id.login_account) {
+            SHARE_MEDIA platform = null;
+            platform = SHARE_MEDIA.QQ;
+            /**begin invoke umeng api**/
+            try {
+                mShareAPI.doOauthVerify(TaskListActivity.this, platform, umAuthListener);
+                mShareAPI.getPlatformInfo(TaskListActivity.this,platform,umAuthListener);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+//    添加call back方法，专门用作umeng事件
+    /** auth callback interface**/
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            if (data!=null){
+                Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText( getApplicationContext(), "Authorize fail", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText( getApplicationContext(), "Authorize cancel", Toast.LENGTH_SHORT).show();
+        }
+    };
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mShareAPI.onActivityResult(requestCode, resultCode, data);
     }
 
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 
