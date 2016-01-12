@@ -7,9 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorBackground"
-    android:gravity="center">
-
+    android:background="@color/colorBackground">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_height="?attr/actionBarSize"
@@ -18,8 +16,7 @@
     <ListView
         android:id="@+id/task_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin">
+        android:layout_height="wrap_content">
     </ListView>
     <Button
         android:layout_width="@dimen/plus_button_width"
@@ -36,9 +33,9 @@
         android:layout_alignRight="@+id/task_list"
         android:layout_alignEnd="@+id/task_list"
         android:layout_marginEnd="@dimen/activity_horizontal_margin" />
-    <com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
+<!--    <com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/slidingmenulayout">
-    </com.jeremyfeinstein.slidingmenu.lib.SlidingMenu>
+    </com.jeremyfeinstein.slidingmenu.lib.SlidingMenu>-->
 </RelativeLayout>

@@ -12,7 +12,15 @@ public class TaskDao {
         task.save();
     }
 
+    public static void delete(Task task) {
+        task.delete();
+    }
+
     public static List<Task> getTaskList() {
-        return Task.findWithQuery(Task.class, "select * from Task order by completed, due_date desc");
+        return Task.findWithQuery(Task.class, "select * from Task order by completed, due_date");
+    }
+
+    public static Task findById(Long id) {
+        return Task.findById(Task.class, id);
     }
 }

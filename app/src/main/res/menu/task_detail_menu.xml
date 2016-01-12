@@ -6,4 +6,9 @@
         android:title="@string/app_settings"
         android:orderInCategory="1"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_menu_item"
+        android:title="@string/app_delete"
+        android:orderInCategory="1"
+        app:showAsAction="never" />
 </menu>

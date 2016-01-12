@@ -23,9 +23,10 @@
         completions."
     </string>
 
+    <!-- Strings related to task -->
     <string name="menu_add_task">添加任务</string>
-    <string name="prompt_task_title">任务名称</string>
-    <string name="prompt_task_description">描述</string>
+    <string name="prompt_task_title">输入任务信息</string>
+    <string name="error_empty_title">请输入任务信息</string>
 
     <!-- Gener Message -->
     <string name="please_wait">请稍候</string>
@@ -33,9 +34,14 @@
     <!-- General Error -->
     <string name="error_server">服务器错误</string>
     <string name="error_network">网络错误</string>
+
+    <!-- menu -->
     <string name="menu_back_task">返回</string>
     <string name="app_settings">设置</string>
+    <string name="app_delete">删除</string>
     <string name="txt_plus_btn">+</string>
+
+
     <string name="app_refresh">刷新</string>
     <string name="action_settings">设置</string>
     <string name="hello_world">你好世界！</string>

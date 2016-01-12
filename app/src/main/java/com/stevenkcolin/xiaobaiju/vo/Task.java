@@ -1,21 +1,20 @@
 package com.stevenkcolin.xiaobaiju.vo;
 
-import android.text.method.DateTimeKeyListener;
-
 import com.orm.SugarRecord;
-import com.stevenkcolin.xiaobaiju.util.DateUtil;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Pengfei on 2015/12/11.
  */
-public class Task extends SugarRecord {
-    private String _id="-1";
-    private String title="";
-    private String descrption="";
-    private Date dueDate= new Date();
-    private boolean completed=false;
+public class Task extends SugarRecord implements Serializable {
+    private Long id;
+    private String _id;
+    private String title;
+    private String descrption;
+    private Date dueDate;
+    private boolean completed;
 
     public Task() {
         super();
@@ -29,10 +28,20 @@ public class Task extends SugarRecord {
         this._id = _id;
     }
 
-    public Task(String title,String descrption)
+    public Task(String title, String descrption)
     {
         this.title = title;
         this.descrption = descrption;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String get_id() {
