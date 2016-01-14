@@ -8,7 +8,8 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/delete_menu_item"
+        android:icon="@drawable/ic_delete_name"
         android:title="@string/app_delete"
         android:orderInCategory="1"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 </menu>
