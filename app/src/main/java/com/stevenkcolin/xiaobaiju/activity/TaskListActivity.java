@@ -105,7 +105,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         intent.setAction("add");
         startActivityForResult(intent, TASK_ADD);
         //添加打点上报代码
-        ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_ADD_CLICK);
+        ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_ADDTASK);
         mReport.saveOnClick(getApplicationContext(),mActionInfo);
 
     }
