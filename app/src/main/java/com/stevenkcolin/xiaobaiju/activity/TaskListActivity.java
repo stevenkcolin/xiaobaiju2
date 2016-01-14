@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,10 @@ import com.stevenkcolin.xiaobaiju.adapter.TaskListAdapter;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.dao.TaskDao;
 import com.stevenkcolin.xiaobaiju.exception.ServerException;
+import com.stevenkcolin.xiaobaiju.report.ActionInfo;
+import com.stevenkcolin.xiaobaiju.report.Report;
+import com.stevenkcolin.xiaobaiju.report.ReportInfo;
+import com.stevenkcolin.xiaobaiju.report.RequestReportInfo;
 import com.stevenkcolin.xiaobaiju.util.DateUtil;
 import com.stevenkcolin.xiaobaiju.util.HttpUtil;
 import com.stevenkcolin.xiaobaiju.vo.Task;
@@ -35,7 +40,7 @@ import java.util.Map;
 /**
  * Created by Pengfei on 2015/12/11.
  */
-public class TaskListActivity extends BaseActivity {
+public class TaskListActivity extends BaseActivity implements Report.AddSaveOnClickListener {
 
     private List<Task> taskList = new ArrayList<Task>();
 
@@ -44,6 +49,8 @@ public class TaskListActivity extends BaseActivity {
     private int TASK_ADD = 1;
     private SlidingMenu slidingMenu;
     private UMShareAPI mShareAPI = null;
+
+    public static Report mReport = Report.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,8 @@ public class TaskListActivity extends BaseActivity {
         });
         //添加左滑菜单
         addSlidingMenu();
+
+        mReport.setAddSaveOnClickListener(this);
     }
 
     //实现从taskDetail返回父窗口时候，刷新task list页面
@@ -91,9 +100,14 @@ public class TaskListActivity extends BaseActivity {
     }
     //添加task，并launch TaskDetailActivity
     public void addTask(){
+        //打开TaskDetailActivity 来添加task详情
         Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
         intent.setAction("add");
         startActivityForResult(intent, TASK_ADD);
+        //添加打点上报代码
+        ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_ADD_CLICK);
+        mReport.saveOnClick(getApplicationContext(),mActionInfo);
+
     }
     //获取Task list, 并且展现在task list中
     public void getTaskListFromDB() {
@@ -213,6 +227,16 @@ public class TaskListActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mShareAPI.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void getReport(ReportInfo report) {
+        Log.e("11111", "getReport aaaaaa");
+    }
+
+    @Override
+    public void getRequestReport(RequestReportInfo requestReportInfo) {
+        Log.e("22222", "getReport bbbbbb");
     }
 
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 
