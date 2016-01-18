@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +50,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
     private UMShareAPI mShareAPI = null;
 
     public static Report mReport = Report.getInstance();
+    ActionInfo mActionInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
     @Override
     protected void onResume(){
         super.onResume();
+
         getTaskListFromDB();
     }
 
@@ -87,12 +88,19 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        ActionInfo mActionInfo;
         switch (item.getItemId()) {
             case R.id.settings:
                 //add settings code
+                //添加打点上报代码
+                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_SETTINGS);
+                mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 return true;
             case R.id.refresh:
                 getTaskListFromDB();
+                //添加打点上报代码
+                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_REFRESH);
+                mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 return true;
             default:
         }
@@ -117,6 +125,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         ListView listView = (ListView)findViewById(R.id.task_list);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
     }
     //添加slidingMenu
     public void addSlidingMenu(){
@@ -161,6 +170,9 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),R.string.txt_about_us,Toast.LENGTH_SHORT).show();
+                //添加打点上报代码
+                ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_MENU_ABOUTUS);
+                mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。 
             }
         });
@@ -196,7 +208,11 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
             /**begin invoke umeng api**/
             try {
                 mShareAPI.doOauthVerify(TaskListActivity.this, platform, umAuthListener);
-                mShareAPI.getPlatformInfo(TaskListActivity.this,platform,umAuthListener);
+                mShareAPI.getPlatformInfo(TaskListActivity.this,platform, umAuthListener);
+
+                //添加打点上报代码
+                ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_MENU_LOGIN);
+                mReport.saveOnClick(getApplicationContext(),mActionInfo);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -231,12 +247,12 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
 
     @Override
     public void getReport(ReportInfo report) {
-        Log.e("11111", "getReport aaaaaa");
+        //Log.e("11111", "getReport aaaaaa");
     }
 
     @Override
     public void getRequestReport(RequestReportInfo requestReportInfo) {
-        Log.e("22222", "getReport bbbbbb");
+        //Log.e("22222", "getReport bbbbbb");
     }
 
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 

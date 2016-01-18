@@ -13,7 +13,10 @@ import android.widget.TextView;
 
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.activity.TaskDetailActivity;
+import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.dao.TaskDao;
+import com.stevenkcolin.xiaobaiju.report.ActionInfo;
+import com.stevenkcolin.xiaobaiju.report.Report;
 import com.stevenkcolin.xiaobaiju.util.DateUtil;
 import com.stevenkcolin.xiaobaiju.vo.Task;
 
@@ -25,6 +28,9 @@ import java.util.List;
 public class TaskListAdapter extends ArrayAdapter<Task> {
     private int resourceId;
     private List<Task> taskList;
+
+    public static Report mReport = Report.getInstance();
+    ActionInfo mActionInfo;
 
     public TaskListAdapter(Context context, int textViewResourceId, List<Task> objects) {
         super(context, textViewResourceId, objects);
@@ -64,6 +70,20 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             @Override
             public void onClick(View v) {
                 boolean status = viewHolder.checkCompleted.isChecked();
+                String tmpStr = viewHolder.textTitle.getText().toString();
+                String strDate = viewHolder.textDueDate.getText().toString();
+
+                //checkbox的数据上报
+                if (status) {
+                    mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_CHECKTASK);
+                } else {
+                    mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_UNCHECKTASK);
+                }
+                mActionInfo.param1 = String.valueOf(status);
+                mActionInfo.param2 = tmpStr;
+                mActionInfo.param3 = strDate;
+                mReport.saveOnClick(getContext(), mActionInfo);
+
                 task.setCompleted(status);
                 task.save();
 
@@ -73,12 +93,25 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             }
         });
 
+
         //添加checkbox的长按事件
         viewHolder.textTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), TaskDetailActivity.class);
                 intent.putExtra("task", task);
+                //添加textTitle的点击－编辑的事件上报
+                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_EDITTASK);
+                boolean status = viewHolder.checkCompleted.isChecked();
+                String tmpStr = viewHolder.textTitle.getText().toString();
+                String strDate = viewHolder.textDueDate.getText().toString();
+
+                mActionInfo.param1 = String.valueOf(status);
+                mActionInfo.param2 = tmpStr;
+                mActionInfo.param3 = strDate;
+                mReport.saveOnClick(getContext(), mActionInfo);
+
+
                 getContext().startActivity(intent);
             }
         });

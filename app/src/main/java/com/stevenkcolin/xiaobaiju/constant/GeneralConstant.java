@@ -35,7 +35,7 @@ public class GeneralConstant {
         //taskDetail的pageId=102;
 
         //侧滑菜单中的按钮
-        public static final int REPPORT_MENU_LOGIN = 100001001;
+        public static final int REPORT_MENU_LOGIN = 100001001;
         public static final int REPORT_MENU_ABOUTUS = 100001002;
         //tasklist中用户操作侧滑菜单操作。侧滑菜单的moduleId=011
         public static final int REPORT_TASKLIST_MENUSHOW = 101011001;
