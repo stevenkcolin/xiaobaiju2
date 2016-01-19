@@ -24,6 +24,10 @@ public class GeneralConstant {
     public final static String DATEBASE_NAME = "xiaobaiju.db";
     public final static int DATABASE_VERSION = 1;
 
+
+    public static final String SHARE_PREF = "SHARE_PREF_CUSTOM";
+    public static final String SHARE_PREF_DOCTOR = "doctor_preference";
+
     //打点上报
     public static final class ReportAction {
         //ActionCode

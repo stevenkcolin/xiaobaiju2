@@ -54,6 +54,7 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
+            android:icon="@mipmap/ic_launcher"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -67,6 +68,7 @@
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
+            android:icon="@mipmap/ic_launcher"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <uses-library
             android:name="com.google.android.maps"
@@ -75,11 +77,15 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="561cae6ae0f55abd990035bf" >
-        </meta-data>
+            android:value="5650f168e0f55ab540001b63" />
+
+        <!--<meta-data-->
+            <!--android:name="UMENG_APPKEY"-->
+            <!--android:value="561cae6ae0f55abd990035bf" >-->
+        <!--</meta-data>-->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Umeng" >
+            android:value="xiaobaiju" >
         </meta-data>
     </application>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
