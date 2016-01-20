@@ -24,6 +24,7 @@ import com.stevenkcolin.xiaobaiju.report.RequestReportInfo;
 import com.stevenkcolin.xiaobaiju.util.DateUtil;
 import com.stevenkcolin.xiaobaiju.util.HttpUtil;
 import com.stevenkcolin.xiaobaiju.vo.Task;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -55,6 +56,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CrashReport.initCrashReport(this, "900018308", false);
         setContentView(R.layout.activity_task_list);
         //读取task列表，并显示在task list中
         getTaskListFromDB();
@@ -108,6 +110,8 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
     }
     //添加task，并launch TaskDetailActivity
     public void addTask(){
+        //CrashReport.testJavaCrash();
+
         //打开TaskDetailActivity 来添加task详情
         Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
         intent.setAction("add");
