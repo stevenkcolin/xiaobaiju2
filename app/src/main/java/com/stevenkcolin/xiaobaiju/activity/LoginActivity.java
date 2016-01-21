@@ -16,19 +16,11 @@ import android.widget.Toast;
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.exception.ServerException;
+import com.stevenkcolin.xiaobaiju.service.UserService;
 import com.stevenkcolin.xiaobaiju.util.DialogUtil;
 import com.stevenkcolin.xiaobaiju.util.FileUtil;
-import com.stevenkcolin.xiaobaiju.util.HttpUtil;
-import com.stevenkcolin.xiaobaiju.util.JSONUtil;
-import com.stevenkcolin.xiaobaiju.util.MD5Util;
-import com.stevenkcolin.xiaobaiju.vo.User;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A login screen that offers login via email/password.
@@ -70,7 +62,6 @@ public class LoginActivity extends BaseActivity {
                 if (!validate()) {
                     return;
                 }
-                barProgressDialog = DialogUtil.showWaitDialog(LoginActivity.this, getString(R.string.please_wait));
                 new RegisterTask().execute(editPhone.getText().toString(), editPassword.getText().toString());
             }
         });
@@ -118,27 +109,21 @@ public class LoginActivity extends BaseActivity {
         private String message = getString(R.string.info_register_success);
         private String phone;
         private String password;
+
+        @Override
+        protected void onPreExecute() {
+            barProgressDialog = DialogUtil.showWaitDialog(LoginActivity.this, getString(R.string.please_wait));
+        }
+
         @Override
         protected Boolean doInBackground(String... params) {
             phone = params[0];
             password = params[1];
-            Map<String, String> map = new HashMap<>();
-            map.put("phone", phone);
-            map.put("password", password);
             try {
-                JSONArray jsonArray = (JSONArray) HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + "/" + GeneralConstant.USER_LOGIN_URI, "POST", JSONUtil.stringifySingle(map));
-                if (jsonArray.length() == 0) {
-                    message = getString(R.string.error_invalid_account);
-                    return false;
-                }
-                JSONObject jsonObject = (JSONObject)jsonArray.get(0);
-
-                User user = User.getUser();
-                user.setId(jsonObject.getString("_id"));
-                user.setPhone(jsonObject.getString("phone"));
-
-                FileUtil.write(LoginActivity.this, GeneralConstant.FILE_NAME_ACCOUNT, phone + "\r\n" + MD5Util.GetMD5Code(password));
-                return true;
+                UserService userService = new UserService();
+                boolean result = userService.login(phone, password, LoginActivity.this);
+                if (!result) message = getString(R.string.error_invalid_account);
+                return result;
             } catch (ServerException se) {
                 message = getString(R.string.error_server);
                 return false;

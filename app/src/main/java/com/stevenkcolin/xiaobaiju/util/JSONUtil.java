@@ -1,8 +1,10 @@
 package com.stevenkcolin.xiaobaiju.util;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -25,6 +27,10 @@ public class JSONUtil {
 
     public static String stringifySingle(Map map) {
         return new JSONObject(map).toString();
+    }
+
+    public static String stringifyArray(Collection col) throws JSONException {
+        return new JSONArray(col).toString();
     }
 
     public static JSONObject fromJSON(String json) throws JSONException{

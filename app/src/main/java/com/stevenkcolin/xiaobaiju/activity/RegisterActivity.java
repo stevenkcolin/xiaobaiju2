@@ -11,20 +11,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.stevenkcolin.xiaobaiju.R;
-import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.exception.ServerException;
+import com.stevenkcolin.xiaobaiju.service.UserService;
 import com.stevenkcolin.xiaobaiju.util.DialogUtil;
-import com.stevenkcolin.xiaobaiju.util.FileUtil;
-import com.stevenkcolin.xiaobaiju.util.HttpUtil;
-import com.stevenkcolin.xiaobaiju.util.JSONUtil;
-import com.stevenkcolin.xiaobaiju.util.MD5Util;
-import com.stevenkcolin.xiaobaiju.vo.User;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Pengfei on 2015/12/9.
@@ -69,7 +58,6 @@ public class RegisterActivity extends BaseActivity {
                 if (!validate()) {
                     return;
                 }
-                barProgressDialog = DialogUtil.showWaitDialog(RegisterActivity.this, getString(R.string.please_wait));
 
                 String phone = editPhone.getText().toString();
                 String password = editPassword.getText().toString();
@@ -106,17 +94,12 @@ public class RegisterActivity extends BaseActivity {
     class CheckPhoneTask extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected Boolean doInBackground(String... params) {
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("phone", params[0]);
-            JSONUtil.stringifySingle(map);
+            String phone = params[0];
             try {
-                JSONArray jsonArray = (JSONArray) HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + "/" + GeneralConstant.USER_FIND_URI, "POST", JSONUtil.stringifySingle(map));
-                if (jsonArray.length() == 0) {
-                    return true;
-                }
-                return false;
+                UserService userService = new UserService();
+                return userService.checkPhoneExist(phone);
             } catch (Exception e) {
-                // TODO: 2015/12/10 deal with server exception
+                // do nothing
                 return true;
             }
         }
@@ -133,14 +116,20 @@ public class RegisterActivity extends BaseActivity {
         private String message = getString(R.string.info_register_success);
         private String phone;
         private String password;
+
+        @Override
+        protected void onPreExecute() {
+            barProgressDialog = DialogUtil.showWaitDialog(RegisterActivity.this, getString(R.string.please_wait));
+        }
+
         @Override
         protected Boolean doInBackground(String... params) {
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("phone", params[0]);
-            JSONUtil.stringifySingle(map);
+            phone = params[0];
+            password = params[1];
             try {
-                JSONArray jsonArray = (JSONArray) HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + "/" + GeneralConstant.USER_FIND_URI, "POST", JSONUtil.stringifySingle(map));
-                if (jsonArray.length() > 0) {
+                UserService userService = new UserService();
+                boolean isExist = userService.checkPhoneExist(phone);
+                if (!isExist) {
                     message = getString(R.string.error_duplicated_phone);
                     return false;
                 }
@@ -152,18 +141,10 @@ public class RegisterActivity extends BaseActivity {
                 return false;
             }
 
-            map = new HashMap<String, String>();
-            map.put("phone", params[0]);
-            map.put("password", params[1]);
-            phone = params[0];
-            password = params[1];
             try {
-                JSONObject jsonObject = (JSONObject)HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + "/" + GeneralConstant.USER_CREATE_URI, "POST", JSONUtil.stringifySingle(map));
-                FileUtil.write(RegisterActivity.this, GeneralConstant.FILE_NAME_ACCOUNT, phone + "\r\n" + MD5Util.GetMD5Code(password));
-                User user = User.getUser();
-                user.setId(jsonObject.getString("_id"));
-                user.setPhone(jsonObject.getString("phone"));
-                return true;
+                UserService userService = new UserService();
+                boolean result = userService.register(phone, password, RegisterActivity.this);
+                return result;
             } catch (ServerException se) {
                 message = getString(R.string.error_server);
                 return false;

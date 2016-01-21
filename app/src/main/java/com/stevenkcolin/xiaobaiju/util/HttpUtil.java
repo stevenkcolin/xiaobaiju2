@@ -45,7 +45,7 @@ public class HttpUtil {
                         listener.onFinish(result);
                     }
                 } catch (Exception e) {
-                    Log.e("HttpUtil", e.getMessage());
+                    Log.e("HttpUtil", e.getMessage(), e);
                     e.printStackTrace();
                     if (listener != null) {
                         listener.onError(e);
@@ -65,15 +65,23 @@ public class HttpUtil {
         try {
             URL url = new URL(address);
             connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(GeneralConstant.CONN_TIMEOUT);
+            connection.setReadTimeout(GeneralConstant.READ_TIMEOUT);
+//            connection.setDoInput(true);
             connection.setRequestMethod(method);
             if (body != null) {
                 connection.setRequestProperty("content-type", "application/json");
+//                connection.setDoOutput(true);
                 DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                out.writeBytes(body);
+                out.write(body.getBytes("UTF8"));
             }
-            connection.setConnectTimeout(GeneralConstant.CONN_TIMEOUT);
-            connection.setReadTimeout(GeneralConstant.READ_TIMEOUT);
-            InputStream in = connection.getInputStream();
+            int status = connection.getResponseCode();
+            InputStream in = null;
+            if (status < 400) {
+                in = connection.getInputStream();
+            } else {
+                in = connection.getErrorStream();
+            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder response = new StringBuilder();
             String line;
@@ -83,7 +91,7 @@ public class HttpUtil {
             Object result = HttpResultUtil.checkResult(response.toString());
             return result;
         } catch (Exception e) {
-            Log.e("HttpUtil", e.getMessage());
+            Log.e("HttpUtil", e.getMessage(), e);
             e.printStackTrace();
             throw e;
         } finally {

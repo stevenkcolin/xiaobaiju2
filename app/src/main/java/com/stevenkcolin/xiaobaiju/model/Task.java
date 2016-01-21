@@ -1,5 +1,7 @@
-package com.stevenkcolin.xiaobaiju.vo;
+package com.stevenkcolin.xiaobaiju.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
 import java.io.Serializable;
@@ -9,12 +11,26 @@ import java.util.Date;
  * Created by Pengfei on 2015/12/11.
  */
 public class Task extends SugarRecord implements Serializable {
+    @SerializedName("localId")
     private Long id;
+    @Expose
     private String _id;
+    @Expose
     private String title;
+    @Expose
     private String descrption;
+    @Expose
     private Date dueDate;
+    @Expose
     private boolean completed;
+    @Expose
+    private String user;
+    @Expose
+    private Date createDate;
+
+    private Date lastUpdateTime;
+    @Expose
+    private boolean isDeleted;
 
     public Task() {
         super();
@@ -82,5 +98,37 @@ public class Task extends SugarRecord implements Serializable {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

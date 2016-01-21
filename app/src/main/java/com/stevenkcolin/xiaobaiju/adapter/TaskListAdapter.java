@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.activity.TaskDetailActivity;
-import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
+import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.dao.TaskDao;
+import com.stevenkcolin.xiaobaiju.model.Task;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.report.Report;
 import com.stevenkcolin.xiaobaiju.util.DateUtil;
-import com.stevenkcolin.xiaobaiju.vo.Task;
 
 import java.util.List;
 
@@ -75,9 +75,9 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
 
                 //checkbox的数据上报
                 if (status) {
-                    mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_CHECKTASK);
+                    mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_CHECKTASK);
                 } else {
-                    mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_UNCHECKTASK);
+                    mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_UNCHECKTASK);
                 }
                 mActionInfo.param1 = String.valueOf(status);
                 mActionInfo.param2 = tmpStr;
@@ -101,7 +101,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
                 Intent intent = new Intent(getContext(), TaskDetailActivity.class);
                 intent.putExtra("task", task);
                 //添加textTitle的点击－编辑的事件上报
-                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_EDITTASK);
+                mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_EDITTASK);
                 boolean status = viewHolder.checkCompleted.isChecked();
                 String tmpStr = viewHolder.textTitle.getText().toString();
                 String strDate = viewHolder.textDueDate.getText().toString();

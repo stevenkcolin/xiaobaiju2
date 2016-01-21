@@ -15,22 +15,22 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.adapter.TaskListAdapter;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
+import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.dao.TaskDao;
-import com.stevenkcolin.xiaobaiju.exception.ServerException;
+import com.stevenkcolin.xiaobaiju.model.Task;
+import com.stevenkcolin.xiaobaiju.model.User;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.report.Report;
 import com.stevenkcolin.xiaobaiju.report.ReportInfo;
 import com.stevenkcolin.xiaobaiju.report.RequestReportInfo;
-import com.stevenkcolin.xiaobaiju.util.DateUtil;
-import com.stevenkcolin.xiaobaiju.util.HttpUtil;
-import com.stevenkcolin.xiaobaiju.vo.Task;
+import com.stevenkcolin.xiaobaiju.service.TaskService;
+import com.stevenkcolin.xiaobaiju.service.UserService;
+import com.stevenkcolin.xiaobaiju.util.DialogUtil;
+import com.stevenkcolin.xiaobaiju.util.FileUtil;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +70,8 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         addSlidingMenu();
 
         mReport.setAddSaveOnClickListener(this);
+
+        new LoginBGTask().execute();
     }
 
     //实现从taskDetail返回父窗口时候，刷新task list页面
@@ -78,6 +80,8 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         super.onResume();
 
         getTaskListFromDB();
+
+        new UploadTasks().execute();
     }
 
     @Override
@@ -93,13 +97,13 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
             case R.id.settings:
                 //add settings code
                 //添加打点上报代码
-                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_SETTINGS);
+                mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_SETTINGS);
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 return true;
             case R.id.refresh:
                 getTaskListFromDB();
                 //添加打点上报代码
-                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_REFRESH);
+                mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_REFRESH);
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 return true;
             default:
@@ -113,7 +117,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         intent.setAction("add");
         startActivityForResult(intent, TASK_ADD);
         //添加打点上报代码
-        ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKLIST_ADDTASK);
+        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_ADDTASK);
         mReport.saveOnClick(getApplicationContext(),mActionInfo);
 
     }
@@ -157,9 +161,10 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         PlatformConfig.setLaiwang("laiwangd497e70d4", "d497e70d4c3e4efeab1381476bac4c5e");
         PlatformConfig.setPinterest("1439206");
 
+
         //set loginbutton to open Login Page
         openLoginPage2();
-        
+
         //set about_us button to have a toast
         openAboutUs();
     }
@@ -171,9 +176,9 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),R.string.txt_about_us,Toast.LENGTH_SHORT).show();
                 //添加打点上报代码
-                ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_MENU_ABOUTUS);
+                ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_ABOUTUS);
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
-                // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。 
+                // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。
             }
         });
     }
@@ -211,7 +216,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
                 mShareAPI.getPlatformInfo(TaskListActivity.this,platform, umAuthListener);
 
                 //添加打点上报代码
-                ActionInfo mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_MENU_LOGIN);
+                ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_LOGIN);
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -222,10 +227,13 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
 //    添加call back方法，专门用作umeng事件
     /** auth callback interface**/
     private UMAuthListener umAuthListener = new UMAuthListener() {
+
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            if (data!=null){
-                Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_SHORT).show();
+            if (data != null){
+                String openId = data.get("openid");
+                String name = data.get("screen_name");
+                new LoginTask().execute(new String[]{GeneralConstant.QQ, openId, name});
             }
         }
 
@@ -255,45 +263,112 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         //Log.e("22222", "getReport bbbbbb");
     }
 
+
+    //登录
+    class LoginTask extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            progressDialog = DialogUtil.showWaitDialog(TaskListActivity.this, getString(R.string.please_wait));
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String loginFrom = params[0];
+            String loginAccount = params[1];
+            String name = params[2];
+            try {
+                UserService userService = new UserService();
+                userService.login3rdAcountExist(loginFrom, loginAccount, name, TaskListActivity.this);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean) {
+                new SyncTask().execute();
+                progressDialog.dismiss();
+            } else {
+                progressDialog.dismiss();
+                Toast.makeText(getBaseContext(), getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    class SyncTask extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            TaskService taskService = new TaskService();
+            try {
+                taskService.syncTask();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean) {
+                getTaskListFromDB();
+            }
+            progressDialog.dismiss();
+        }
+    }
+
+
+    class LoginBGTask extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            List<String> userInfo = FileUtil.read(TaskListActivity.this, GeneralConstant.FILE_NAME_ACCOUNT);
+            boolean result = false;
+            try {
+                if (userInfo != null & !userInfo.isEmpty()) {
+                    UserService userService = new UserService();
+                    if (userInfo.get(0).equals("0")) {
+                        result = userService.login(userInfo.get(1), userInfo.get(2), TaskListActivity.this);
+                    } else if (userInfo.get(0).equals("1")) {
+                        result = userService.login3rdAcountExist(userInfo.get(1), userInfo.get(2), userInfo.get(3), TaskListActivity.this);
+                    }
+                }
+                return result;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+        }
+    }
+
     // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 
-    class loadTasks extends AsyncTask<Void, Void, Boolean> {
-        String message;
+    class UploadTasks extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                JSONArray jsonArray = (JSONArray) HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.TASK_URI, "GET", null);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Task task = new Task();
-                    task.set_id(jsonObject.getString("_id"));
-                    task.setTitle(jsonObject.getString("title"));
-                    task.setDescrption(jsonObject.getString("description"));
-                    task.setCompleted(jsonObject.getBoolean("completed"));
-                    if (!jsonObject.isNull("dueDate")) {
-                        task.setDueDate(DateUtil.toDate(jsonObject.getString("dueDate")));
-                    }
-                    taskList.add(task);
+                if (User.getUser().getId() != null) {
+                    TaskService taskService = new TaskService();
+                    return taskService.uploadTask(TaskListActivity.this);
                 }
-                return true;
-            } catch (ServerException se) {
-                message = getString(R.string.error_server);
                 return false;
             } catch (Exception e) {
-                message = getString(R.string.error_network);
                 return false;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if (!result) {
-                Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-            } else {
-                TaskListAdapter adapter = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskList);
-                ListView listView = (ListView)findViewById(R.id.task_list);
-                listView.setAdapter(adapter);
-            }
-            progressDialog.dismiss();
         }
 
     }

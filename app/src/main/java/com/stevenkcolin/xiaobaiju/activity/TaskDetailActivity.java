@@ -10,11 +10,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.stevenkcolin.xiaobaiju.R;
-import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
+import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.dao.TaskDao;
+import com.stevenkcolin.xiaobaiju.model.Task;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.report.Report;
-import com.stevenkcolin.xiaobaiju.vo.Task;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -49,7 +49,7 @@ public class TaskDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (checkCompleted.isChecked()) {
-                    mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKDETAIL_CHECKTASK);
+                    mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKDETAIL_CHECKTASK);
 
                     boolean status = checkCompleted.isChecked();
                     String tmpStr = editTitle.getText().toString();
@@ -59,7 +59,7 @@ public class TaskDetailActivity extends BaseActivity {
                     mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 }
                 else {
-                    mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKDETAIL_UNCHECKTASK);
+                    mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKDETAIL_UNCHECKTASK);
 
                     boolean status = checkCompleted.isChecked();
                     String tmpStr = editTitle.getText().toString();
@@ -100,14 +100,14 @@ public class TaskDetailActivity extends BaseActivity {
     {
         super.onStop();
         //添加打点上报
-        mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKDETAIL_BACK);
+        mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKDETAIL_BACK);
         mReport.saveOnClick(getApplicationContext(), mActionInfo);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.task_detail_menu, menu);
-        if (task != null) {
+        if (task != null && task.getId() != null) {
             MenuItem miDelete = menu.findItem(R.id.delete_menu_item);
             miDelete.setVisible(true);
         }
@@ -122,15 +122,16 @@ public class TaskDetailActivity extends BaseActivity {
                 // TODO: 12/31/15 添加settings的代码
                 // TODO: 12/31/15 需要将menu item中的功能写在一起，而不是分开来再每个页面。
                 //添加打点上报
-                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKDETAIL_SETTINGS);
+                mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKDETAIL_SETTINGS);
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 return true;
             case R.id.delete_menu_item:
-                TaskDao.delete(task);
+                task = TaskDao.findById(task.getId());
+                TaskDao.markAsDelete(task);
                 isSave = false;
                 finish();
                 //添加打点上报
-                mActionInfo = new ActionInfo(GeneralConstant.ReportAction.REPORT_TASKDETAIL_DELETE);
+                mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKDETAIL_DELETE);
                 mReport.saveOnClick(getApplicationContext(), mActionInfo);
             default:
                 //实际上点击返回按钮，关掉当前的task detail页面。
