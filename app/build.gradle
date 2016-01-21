@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'bugly'   //添加Bugly插件
 
 android {
     compileSdkVersion 23
@@ -10,6 +11,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     buildTypes {
         release {
@@ -38,4 +43,11 @@ dependencies {
     compile files('libs/open_sdk_r5509.jar')
     compile files('libs/SocialSDK_QQZone_3.jar')
     compile files('libs/umeng_social_sdk.jar')
+
+    compile 'com.tencent.bugly:crashreport:latest.release'  //其中latest.release为当前最新的Bugly SDK版本号
+}
+
+bugly {
+    appId = '900018308'    //注册时分配的App ID
+    appKey = 'AgNB1OuiXQfJTLR8'  //注册时分配的App Key
 }

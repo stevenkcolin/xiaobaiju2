@@ -27,6 +27,10 @@ import com.stevenkcolin.xiaobaiju.service.TaskService;
 import com.stevenkcolin.xiaobaiju.service.UserService;
 import com.stevenkcolin.xiaobaiju.util.DialogUtil;
 import com.stevenkcolin.xiaobaiju.util.FileUtil;
+import com.stevenkcolin.xiaobaiju.util.DateUtil;
+import com.stevenkcolin.xiaobaiju.util.HttpUtil;
+import com.stevenkcolin.xiaobaiju.vo.Task;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -55,6 +59,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CrashReport.initCrashReport(this, "900018308", false);
         setContentView(R.layout.activity_task_list);
         //读取task列表，并显示在task list中
         getTaskListFromDB();
@@ -161,10 +166,9 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         PlatformConfig.setLaiwang("laiwangd497e70d4", "d497e70d4c3e4efeab1381476bac4c5e");
         PlatformConfig.setPinterest("1439206");
 
-
         //set loginbutton to open Login Page
         openLoginPage2();
-
+        
         //set about_us button to have a toast
         openAboutUs();
     }
@@ -178,7 +182,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
                 //添加打点上报代码
                 ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_ABOUTUS);
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
-                // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。
+                // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。 
             }
         });
     }
@@ -227,7 +231,6 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
 //    添加call back方法，专门用作umeng事件
     /** auth callback interface**/
     private UMAuthListener umAuthListener = new UMAuthListener() {
-
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
             if (data != null){

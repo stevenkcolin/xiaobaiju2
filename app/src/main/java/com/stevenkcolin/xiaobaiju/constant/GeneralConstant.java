@@ -26,4 +26,8 @@ public class GeneralConstant {
 
     //3rd party login
     public final static String QQ = "QQ";
+
+
+    public static final String SHARE_PREF = "SHARE_PREF_CUSTOM";
+    public static final String SHARE_PREF_DOCTOR = "doctor_preference";
 }

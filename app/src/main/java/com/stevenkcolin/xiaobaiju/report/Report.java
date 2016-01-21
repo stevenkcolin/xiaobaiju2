@@ -3,6 +3,8 @@ package com.stevenkcolin.xiaobaiju.report;
 import android.content.Context;
 import android.util.Log;
 
+import com.stevenkcolin.xiaobaiju.util.CommonUtil;
+
 
 /**
  * Created by Ken on 15/4/8.
@@ -36,25 +38,28 @@ public class Report {
         //接口调用数据上报
         String reportLog = new StringBuffer().append("\nactionCode=======").append(report.actionCode).append("\nactionParam1=======").append(report.actionParam1).append("\nactionParam2=======").append(report.actionParam2).append("\nactionParam3=======").append(report.actionParam3).toString();
         Log.e("report", reportLog);
-        String client = "patient"; //CommonUtility.UIUtility.getClientName(context);
-        if (client.contains("patient")) {
-            report.appType = 1;
-        } else {
-            report.appType = 0;
-        }
-        report.appVer = ""; //CommonUtility.UIUtility.getVersionName(context);
-//        CommonUtility.DebugLog.e("getIMEI",CommonUtility.DeviceInfoUtility.getIMEI(context));
-//        CommonUtility.DebugLog.e("onlyid",CommonUtility.DeviceInfoUtility.getOnlyID(context));
-//        report.localId = CommonUtility.getUUID(context);
-        report.localId = ""; //CommonUtility.DeviceInfoUtility.getOnlyID(context);
-//        CommonUtility.DebugLog.e("MD5",report.localId);
-        report.ip = ""; //CommonUtility.getLocalHostIp();
-        report.deviceModel = ""; //CommonUtility.getDeviceModel();
-        report.os = ""; //CommonUtility.getOSVersion();
+//        String client = "patient"; //CommonUtility.UIUtility.getClientName(context);
+//        if (client.contains("patient")) {
+//            report.appType = 1;
+//        } else {
+//            report.appType = 0;
+//        }
+        report.appType = 1;
+        report.appVer = CommonUtil.getVersionName(context);
+        report.localId = CommonUtil.DeviceInfoUtility.getOnlyID(context);
+        report.ip = CommonUtil.DeviceInfoUtility.getLocalHostIp(); //CommonUtility.getLocalHostIp();
+        Log.e("report","appver:"+report.appVer+"-----------"+"localId:"+report.localId+"----------"+"ip:"+report.ip);
+
+        report.deviceModel = CommonUtil.getDeviceModel(); //CommonUtility.getDeviceModel();
+        report.os = CommonUtil.getOSVersion(); //CommonUtility.getOSVersion();
         report.actionTime = System.currentTimeMillis();
-        report.netType = ""; //CommonUtility.NetTypeUtility.getNetType(context);
-        report.carrier = ""; //CommonUtility.NetTypeUtility.getCarrier(context);
-        report.channelId = ""; //CommonUtility.getChannelId(context);
+        Log.e("report","deviceModel:"+report.deviceModel+"--------"+"os:"+report.os+"---------"+"actionTime:"+report.actionTime);
+
+        report.netType = CommonUtil.NetTypeUtility.getNetType(context); //CommonUtility.NetTypeUtility.getNetType(context);
+        report.carrier = CommonUtil.NetTypeUtility.getCarrier(context); //CommonUtility.NetTypeUtility.getCarrier(context);
+        report.channelId = CommonUtil.getChannelId(context); //CommonUtility.getChannelId(context);
+        Log.e("report","netType:"+report.netType+"----------"+"carrier:"+report.carrier+"--------"+"channelId:"+report.channelId);
+
         mAddSaveOnClickListener.getReport(report);
     }
 
@@ -104,6 +109,7 @@ public class Report {
     public void setAddSaveOnClickListener(AddSaveOnClickListener listener) {
         mAddSaveOnClickListener = listener;
     }
+
 
 
 }
