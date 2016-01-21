@@ -27,9 +27,7 @@ import com.stevenkcolin.xiaobaiju.service.TaskService;
 import com.stevenkcolin.xiaobaiju.service.UserService;
 import com.stevenkcolin.xiaobaiju.util.DialogUtil;
 import com.stevenkcolin.xiaobaiju.util.FileUtil;
-import com.stevenkcolin.xiaobaiju.util.DateUtil;
-import com.stevenkcolin.xiaobaiju.util.HttpUtil;
-import com.stevenkcolin.xiaobaiju.vo.Task;
+import com.stevenkcolin.xiaobaiju.util.SyncUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMAuthListener;
@@ -290,7 +288,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            if (aBoolean) {
+            if (aBoolean && !SyncUtil.isSync) {
                 new SyncTask().execute();
                 progressDialog.dismiss();
             } else {
@@ -303,6 +301,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
     class SyncTask extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected void onPreExecute() {
+            SyncUtil.isSync = true;
         }
 
         @Override
@@ -318,6 +317,7 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            SyncUtil.isSync = false;
             if (aBoolean) {
                 getTaskListFromDB();
             }
