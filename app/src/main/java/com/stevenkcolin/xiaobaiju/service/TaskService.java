@@ -1,6 +1,7 @@
 package com.stevenkcolin.xiaobaiju.service;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,6 +42,9 @@ public class TaskService {
 //        String json = JSONUtil.stringifyArray(taskList);
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(taskList);
+        Log.e("report",GeneralConstant.SERVER_URL + GeneralConstant.TASK_URI + GeneralConstant.TASK_MASSCREATE_URI);
+
+
         JSONArray jsonArray = (JSONArray)HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.TASK_URI + GeneralConstant.TASK_MASSCREATE_URI, "POST", json);
         for (int i = 0; i < jsonArray.length(); i++) {
             Task task = taskList.get(i);
