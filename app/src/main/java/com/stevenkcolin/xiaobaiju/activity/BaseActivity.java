@@ -5,11 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.stevenkcolin.xiaobaiju.common.ActivityCollector;
+import com.stevenkcolin.xiaobaiju.report.Report;
 
 /**
  * Created by Pengfei on 2015/12/9.
  */
 public class BaseActivity extends AppCompatActivity {
+    public static Report mReport = Report.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

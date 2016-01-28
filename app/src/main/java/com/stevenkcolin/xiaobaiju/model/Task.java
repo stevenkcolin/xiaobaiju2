@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by Pengfei on 2015/12/11.
  */
 public class Task extends SugarRecord implements Serializable {
-    @SerializedName("localId")
+    @SerializedName("_localId")
     private Long id;
     @Expose
     private String _id;

@@ -20,9 +20,6 @@ import com.stevenkcolin.xiaobaiju.dao.TaskDao;
 import com.stevenkcolin.xiaobaiju.model.Task;
 import com.stevenkcolin.xiaobaiju.model.User;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
-import com.stevenkcolin.xiaobaiju.report.Report;
-import com.stevenkcolin.xiaobaiju.report.ReportInfo;
-import com.stevenkcolin.xiaobaiju.report.RequestReportInfo;
 import com.stevenkcolin.xiaobaiju.service.TaskService;
 import com.stevenkcolin.xiaobaiju.service.UserService;
 import com.stevenkcolin.xiaobaiju.util.DialogUtil;
@@ -34,25 +31,19 @@ import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Pengfei on 2015/12/11.
  */
-public class TaskListActivity extends BaseActivity implements Report.AddSaveOnClickListener {
-
-    private List<Task> taskList = new ArrayList<Task>();
+public class TaskListActivity extends BaseActivity {
 
     private ProgressDialog progressDialog;
 
     private int TASK_ADD = 1;
     private SlidingMenu slidingMenu;
     private UMShareAPI mShareAPI = null;
-
-    public static Report mReport = Report.getInstance();
-    ActionInfo mActionInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +62,6 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         });
         //添加左滑菜单
         addSlidingMenu();
-
-        mReport.setAddSaveOnClickListener(this);
 
         new LoginBGTask().execute();
     }
@@ -253,17 +242,6 @@ public class TaskListActivity extends BaseActivity implements Report.AddSaveOnCl
         super.onActivityResult(requestCode, resultCode, data);
         mShareAPI.onActivityResult(requestCode, resultCode, data);
     }
-
-    @Override
-    public void getReport(ReportInfo report) {
-        //Log.e("11111", "getReport aaaaaa");
-    }
-
-    @Override
-    public void getRequestReport(RequestReportInfo requestReportInfo) {
-        //Log.e("22222", "getReport bbbbbb");
-    }
-
 
     //登录
     class LoginTask extends AsyncTask<String, Integer, Boolean> {
