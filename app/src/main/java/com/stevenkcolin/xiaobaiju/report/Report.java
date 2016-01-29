@@ -6,6 +6,7 @@ import android.util.Log;
 import com.stevenkcolin.xiaobaiju.model.ReportInfo;
 import com.stevenkcolin.xiaobaiju.model.User;
 import com.stevenkcolin.xiaobaiju.util.CommonUtil;
+import com.stevenkcolin.xiaobaiju.util.GeoUtil;
 
 
 /**
@@ -56,6 +57,10 @@ public class Report {
         report.netType = CommonUtil.NetTypeUtility.getNetType(context); //CommonUtility.NetTypeUtility.getNetType(context);
         report.carrier = CommonUtil.NetTypeUtility.getCarrier(context); //CommonUtility.NetTypeUtility.getCarrier(context);
         report.channelId = CommonUtil.getChannelId(context); //CommonUtility.getChannelId(context);
+
+        Double[] coordinate = GeoUtil.getCoordinate(context);
+        report.latitude = coordinate[0] + "";
+        report.longitude = coordinate[1] + "";
         Log.d("report", "netType:" + report.netType + "----------" + "carrier:" + report.carrier + "--------" + "channelId:" + report.channelId);
 
         ReportService reportService = new ReportService();
