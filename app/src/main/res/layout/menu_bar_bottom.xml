@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentBottom = "true"
+    android:orientation="vertical" >
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <RadioGroup
+        android:id="@+id/tab_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:background="@drawable/menuborder"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/menu_task"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center_horizontal|bottom"
+            android:textColor="@drawable/menu_selector_color"
+            android:text="@string/menu_task"
+            android:drawablePadding="3dp"/>
+        <RadioButton
+            android:id="@+id/menu_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center_horizontal|bottom"
+            android:textColor="@drawable/menu_selector_color"
+            android:text="@string/menu_action"
+            android:drawablePadding="3dp"/>
+        <RadioButton
+            android:id="@+id/menu_mine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center_horizontal|bottom"
+            android:textColor="@drawable/menu_selector_color"
+            android:text="@string/menu_mine"
+            android:drawablePadding="3dp"/>
+    </RadioGroup>
+</LinearLayout>
