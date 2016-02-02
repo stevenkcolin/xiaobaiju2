@@ -28,6 +28,11 @@
     <string name="prompt_task_title">输入任务信息</string>
     <string name="error_empty_title">请输入任务信息</string>
 
+    <!-- Strings related to menu -->
+    <string name="menu_task">任务</string>
+    <string name="menu_action">模板</string>
+    <string name="menu_mine">我的</string>
+
     <!-- Gener Message -->
     <string name="please_wait">请稍候</string>
 

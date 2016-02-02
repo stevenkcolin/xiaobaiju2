@@ -7,18 +7,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.stevenkcolin.xiaobaiju.R;
-import com.stevenkcolin.xiaobaiju.adapter.TaskListAdapter;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
-import com.stevenkcolin.xiaobaiju.dao.TaskDao;
-import com.stevenkcolin.xiaobaiju.model.Task;
-import com.stevenkcolin.xiaobaiju.model.User;
+import com.stevenkcolin.xiaobaiju.fragment.BaseFragment;
+import com.stevenkcolin.xiaobaiju.fragment.TaskListFragment;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.service.TaskService;
 import com.stevenkcolin.xiaobaiju.service.UserService;
@@ -39,41 +37,43 @@ import java.util.Map;
  */
 public class TaskListActivity extends BaseActivity {
 
-    private ProgressDialog progressDialog;
+    private ProgressDialog mProgressDialog;
 
-    private int TASK_ADD = 1;
-    private SlidingMenu slidingMenu;
+    private SlidingMenu mSlidingMenu;
     private UMShareAPI mShareAPI = null;
+
+    private BaseFragment mFragment;
+    private TaskListFragment mFragmentTask = new TaskListFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         CrashReport.initCrashReport(this, "900018308", false);
-        setContentView(R.layout.activity_task_list);
-        //读取task列表，并显示在task list中
-        getTaskListFromDB();
-        //给圆形buttonadd task, 添加私有方法addTask(),实现添加task
-        final Button mButton = (Button) findViewById(R.id.add_task);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addTask();
-            }
-        });
+        setContentView(R.layout.activity_main);
+
+        mFragment = mFragmentTask;
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
+
         //添加左滑菜单
         addSlidingMenu();
-
         new LoginBGTask().execute();
-    }
 
-    //实现从taskDetail返回父窗口时候，刷新task list页面
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-        getTaskListFromDB();
-
-        new UploadTasks().execute();
+        /*底部菜单事件*/
+        RadioGroup rg = (RadioGroup) findViewById(R.id.tab_menu);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.menu_task:
+                        mFragment = mFragmentTask;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
+                        changeMenuIcon(true, false, false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -93,7 +93,7 @@ public class TaskListActivity extends BaseActivity {
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
                 return true;
             case R.id.refresh:
-                getTaskListFromDB();
+                mFragment.fresh();
                 //添加打点上报代码
                 mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_REFRESH);
                 mReport.saveOnClick(getApplicationContext(),mActionInfo);
@@ -102,35 +102,16 @@ public class TaskListActivity extends BaseActivity {
         }
         return true;
     }
-    //添加task，并launch TaskDetailActivity
-    public void addTask(){
-        //打开TaskDetailActivity 来添加task详情
-        Intent intent = new Intent(TaskListActivity.this, TaskDetailActivity.class);
-        intent.setAction("add");
-        startActivityForResult(intent, TASK_ADD);
-        //添加打点上报代码
-        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_ADDTASK);
-        mReport.saveOnClick(getApplicationContext(),mActionInfo);
 
-    }
-    //获取Task list, 并且展现在task list中
-    public void getTaskListFromDB() {
-        //加载所有的task
-        List<Task> taskList = TaskDao.getTaskList();
-        TaskListAdapter adapter = new TaskListAdapter(TaskListActivity.this, R.layout.activity_task_list_item, taskList);
-        ListView listView = (ListView)findViewById(R.id.task_list);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
-    }
     //添加slidingMenu
     public void addSlidingMenu(){
-        slidingMenu = new SlidingMenu(this);//创建对象
-        slidingMenu.setMode(SlidingMenu.LEFT);//设定模式，SlidingMenu在左边
-        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);//配置slidingmenu偏移出来的尺寸
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//全屏都可以拖拽触摸，打开slidingmenu
-        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);//附加到当前的Aty上去
-        slidingMenu.setMenu(R.layout.activity_xiaobaiju_sliding_menu);
+        mSlidingMenu = new SlidingMenu(this);//创建对象
+        mSlidingMenu.setMode(SlidingMenu.LEFT);//设定模式，SlidingMenu在左边
+        mSlidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);//配置slidingmenu偏移出来的尺寸
+        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//全屏都可以拖拽触摸，打开slidingmenu
+        mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);//附加到当前的Aty上去
+        mSlidingMenu.setMenu(R.layout.activity_xiaobaiju_sliding_menu);
 
 
         /** init auth api**/
@@ -154,8 +135,8 @@ public class TaskListActivity extends BaseActivity {
         PlatformConfig.setPinterest("1439206");
 
         //set loginbutton to open Login Page
-        openLoginPage2();
-        
+        openLoginPage();
+
         //set about_us button to have a toast
         openAboutUs();
     }
@@ -168,27 +149,14 @@ public class TaskListActivity extends BaseActivity {
                 Toast.makeText(getApplicationContext(),R.string.txt_about_us,Toast.LENGTH_SHORT).show();
                 //添加打点上报代码
                 ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_ABOUTUS);
-                mReport.saveOnClick(getApplicationContext(),mActionInfo);
-                // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。 
+                mReport.saveOnClick(getApplicationContext(), mActionInfo);
+                // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。
             }
         });
     }
 
     //给左侧菜单按钮login_account添加事件，打开login Page
     private void openLoginPage(){
-        findViewById(R.id.login_account).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TaskListActivity.this, LoginActivity.class);
-                intent.setAction("add");
-                startActivityForResult(intent, TASK_ADD);
-
-            }
-        });
-    }
-
-    //给左侧菜单按钮login_account添加事件，打开login Page
-    private void openLoginPage2(){
         findViewById(R.id.login_account).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,7 +188,7 @@ public class TaskListActivity extends BaseActivity {
     private UMAuthListener umAuthListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            if (data != null){
+            if (data != null && data.get("openid") != null){
                 String openId = data.get("openid");
                 String name = data.get("screen_name");
                 new LoginTask().execute(new String[]{GeneralConstant.QQ, openId, name});
@@ -247,7 +215,7 @@ public class TaskListActivity extends BaseActivity {
     class LoginTask extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected void onPreExecute() {
-            progressDialog = DialogUtil.showWaitDialog(TaskListActivity.this, getString(R.string.please_wait));
+            mProgressDialog = DialogUtil.showWaitDialog(TaskListActivity.this, getString(R.string.please_wait));
         }
 
         @Override
@@ -268,9 +236,9 @@ public class TaskListActivity extends BaseActivity {
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean && !SyncUtil.isSync) {
                 new SyncTask().execute();
-                progressDialog.dismiss();
+                mProgressDialog.dismiss();
             } else {
-                progressDialog.dismiss();
+                mProgressDialog.dismiss();
                 Toast.makeText(getBaseContext(), getString(R.string.error_network), Toast.LENGTH_SHORT).show();
             }
         }
@@ -297,9 +265,9 @@ public class TaskListActivity extends BaseActivity {
         protected void onPostExecute(Boolean aBoolean) {
             SyncUtil.isSync = false;
             if (aBoolean) {
-                getTaskListFromDB();
+                mFragment.fresh();
             }
-            progressDialog.dismiss();
+            mProgressDialog.dismiss();
         }
     }
 
@@ -333,24 +301,13 @@ public class TaskListActivity extends BaseActivity {
         }
     }
 
-    // TODO: 12/31/15 添加代码，实现当有网络情况下的调用后台接口功能 
-    class UploadTasks extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            try {
-                if (User.getUser().getId() != null) {
-                    TaskService taskService = new TaskService();
-                    return taskService.uploadTask(TaskListActivity.this);
-                }
-                return false;
-            } catch (Exception e) {
-                return false;
-            }
+        private void changeMenuIcon(boolean main, boolean account, boolean more) {
+            RadioButton radioMain = (RadioButton)findViewById(R.id.menu_task);
+            RadioButton radioAccount = (RadioButton)findViewById(R.id.menu_action);
+            RadioButton radioMore = (RadioButton)findViewById(R.id.menu_mine);
+            radioMain.setChecked(main);
+            radioAccount.setChecked(account);
+            radioMore.setChecked(more);
         }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-        }
-
-    }
 }

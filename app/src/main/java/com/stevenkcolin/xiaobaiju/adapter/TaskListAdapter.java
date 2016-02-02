@@ -85,7 +85,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
                 mReport.saveOnClick(getContext(), mActionInfo);
 
                 task.setCompleted(status);
-                task.save();
+                TaskDao.save(task);
 
                 List<Task> taskList = TaskDao.getTaskList();
                 TaskListAdapter.this.clear();

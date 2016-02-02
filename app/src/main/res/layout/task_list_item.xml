@@ -3,6 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/list_padding"
+    android:paddingBottom="@dimen/list_padding"
     android:theme="@style/Theme.AppCompat.NoActionBar">
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/task_completed"
