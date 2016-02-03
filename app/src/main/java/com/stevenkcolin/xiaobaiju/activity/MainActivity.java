@@ -17,6 +17,7 @@ import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.fragment.ActionListFragment;
 import com.stevenkcolin.xiaobaiju.fragment.BaseFragment;
+import com.stevenkcolin.xiaobaiju.fragment.MineFragment;
 import com.stevenkcolin.xiaobaiju.fragment.TaskListFragment;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.service.TaskService;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity {
     private BaseFragment mFragment;
     private TaskListFragment mFragmentTask = new TaskListFragment();
     private ActionListFragment mFragmentAction = new ActionListFragment();
+    private MineFragment mFragmentMine = new MineFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,11 @@ public class MainActivity extends BaseActivity {
                         mFragment = mFragmentAction;
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
                         changeMenuIcon(false, true, false);
+                        break;
+                    case R.id.menu_mine:
+                        mFragment = mFragmentMine;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
+                        changeMenuIcon(false, false, true);
                         break;
                     default:
                         break;
