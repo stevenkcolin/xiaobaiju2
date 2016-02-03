@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorBackground">#111111</color>
+    <color name="colorBackground2">#333333</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorTextSelected">#FFFFFF</color>
     <color name="colorText">#999999</color>

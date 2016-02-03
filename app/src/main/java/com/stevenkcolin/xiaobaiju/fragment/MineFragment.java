@@ -1,6 +1,8 @@
 package com.stevenkcolin.xiaobaiju.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,8 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
+import com.stevenkcolin.xiaobaiju.service.TaskService;
+import com.stevenkcolin.xiaobaiju.service.UserService;
+import com.stevenkcolin.xiaobaiju.util.DialogUtil;
+import com.stevenkcolin.xiaobaiju.util.SyncUtil;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -27,17 +34,23 @@ public class MineFragment extends BaseFragment {
     private String mName;
     private String mImageUrl;
 
+    private ProgressDialog mProgressDialog;
+    private Boolean mLogged;
+    private TextView mText;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_mine, null);
+        
     }
 
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         //添加aboutUs事件
         openAboutUs();
         initLogin();
@@ -119,12 +132,13 @@ public class MineFragment extends BaseFragment {
                 String openId = data.get("openid");
                 mName = data.get("screen_name");
                 mImageUrl = data.get("profile_image_url");
-
                 if (mName!=null && mImageUrl!=null){
-                    TextView txtView1 = (TextView) getView().findViewById(R.id.txtView1);
-                    txtView1.setText(mName);
+                    mLogged = true;
+                    mText = (TextView) getView().findViewById(R.id.txtView1);
+                    mText.setText(mName);
+                    new LoginTask().execute(new String[]{GeneralConstant.QQ, openId, mName});
                 }
-                //new LoginTask().execute(new String[]{GeneralConstant.QQ, openId, name});
+
             }
 
         }
@@ -145,6 +159,67 @@ public class MineFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         mShareAPI.onActivityResult(requestCode, resultCode, data);
     }
+
+    //登录
+    class LoginTask extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            mProgressDialog = DialogUtil.showWaitDialog(getActivity(), getString(R.string.please_wait));
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String loginFrom = params[0];
+            String loginAccount = params[1];
+            String name = params[2];
+            try {
+                UserService userService = new UserService();
+                userService.login3rdAcountExist(loginFrom, loginAccount, name, getActivity());
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean && !SyncUtil.isSync) {
+                new SyncTask().execute();
+                mProgressDialog.dismiss();
+            } else {
+                mProgressDialog.dismiss();
+                Toast.makeText(getContext(), getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    class SyncTask extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected void onPreExecute() {
+            SyncUtil.isSync = true;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            TaskService taskService = new TaskService();
+            try {
+                taskService.syncTask();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            SyncUtil.isSync = false;
+            if (aBoolean) {
+                //mFragment.fresh();
+            }
+            mProgressDialog.dismiss();
+        }
+    }
+
 
 
 }
