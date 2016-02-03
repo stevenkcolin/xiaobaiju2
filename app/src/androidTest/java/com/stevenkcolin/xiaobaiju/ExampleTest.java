@@ -6,14 +6,14 @@ import android.os.SystemClock;
 import android.test.InstrumentationTestCase;
 import android.widget.Button;
 
+import com.stevenkcolin.xiaobaiju.activity.MainActivity;
 import com.stevenkcolin.xiaobaiju.activity.TaskDetailActivity;
-import com.stevenkcolin.xiaobaiju.activity.TaskListActivity;
 
 /**
  * Created by linchen on 1/21/16.
  */
 public class ExampleTest extends InstrumentationTestCase {
-    private TaskListActivity app = null;
+    private MainActivity app = null;
     private TaskDetailActivity detailActivity = null;
     private Button mbtnAddTask = null;
 
@@ -29,11 +29,11 @@ public class ExampleTest extends InstrumentationTestCase {
         }
 //        Intent intent = new Intent();
 //        //System.out.println("---------------------------------------------------");
-//        intent.setClassName("com.stevenkcolin.xiaobaiju", TaskListActivity.class.getName());
+//        intent.setClassName("com.stevenkcolin.xiaobaiju", MainActivity.class.getName());
 //        System.out.println("99999999999999999");
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        //获取被测对象context
-//        app = (TaskListActivity) getInstrumentation().startActivitySync(intent);
+//        app = (MainActivity) getInstrumentation().startActivitySync(intent);
 //
 //        //System.out.println("Apppppppppp:  "+app);
 //
@@ -70,12 +70,12 @@ public class ExampleTest extends InstrumentationTestCase {
         Instrumentation instrumentation = getInstrumentation();
 
         // Register we are interested in the authentication activiry...
-        Instrumentation.ActivityMonitor monitor = instrumentation.addMonitor(TaskListActivity.class.getName(), null, false);
+        Instrumentation.ActivityMonitor monitor = instrumentation.addMonitor(MainActivity.class.getName(), null, false);
 
         // Start the authentication activity as the first activity...
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName(instrumentation.getTargetContext(), TaskListActivity.class.getName());
+        intent.setClassName(instrumentation.getTargetContext(), MainActivity.class.getName());
         instrumentation.startActivitySync(intent);
 
         // Wait for it to start...
@@ -105,7 +105,7 @@ public class ExampleTest extends InstrumentationTestCase {
     public void testActivity() throws Exception {
 //        Instrumentation instrumentation = getInstrumentation();
 //        Log.e("report11111", TaskDetailActivity.class.getName());
-//        Instrumentation.ActivityMonitor monitor = instrumentation.addMonitor(TaskListActivity.class.getName(), null, false);
+//        Instrumentation.ActivityMonitor monitor = instrumentation.addMonitor(MainActivity.class.getName(), null, false);
 //
 //        Log.v("testActivity", "test the Activity");
 //        SystemClock.sleep(1500);

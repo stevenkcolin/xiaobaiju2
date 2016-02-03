@@ -15,6 +15,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
+import com.stevenkcolin.xiaobaiju.fragment.ActionListFragment;
 import com.stevenkcolin.xiaobaiju.fragment.BaseFragment;
 import com.stevenkcolin.xiaobaiju.fragment.TaskListFragment;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
@@ -35,7 +36,7 @@ import java.util.Map;
 /**
  * Created by Pengfei on 2015/12/11.
  */
-public class TaskListActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
     private ProgressDialog mProgressDialog;
 
@@ -44,6 +45,7 @@ public class TaskListActivity extends BaseActivity {
 
     private BaseFragment mFragment;
     private TaskListFragment mFragmentTask = new TaskListFragment();
+    private ActionListFragment mFragmentAction = new ActionListFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,11 @@ public class TaskListActivity extends BaseActivity {
                         mFragment = mFragmentTask;
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
                         changeMenuIcon(true, false, false);
+                        break;
+                    case R.id.menu_action:
+                        mFragment = mFragmentAction;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
+                        changeMenuIcon(false, true, false);
                         break;
                     default:
                         break;
@@ -171,8 +178,8 @@ public class TaskListActivity extends BaseActivity {
             platform = SHARE_MEDIA.QQ;
             /**begin invoke umeng api**/
             try {
-                mShareAPI.doOauthVerify(TaskListActivity.this, platform, umAuthListener);
-                mShareAPI.getPlatformInfo(TaskListActivity.this,platform, umAuthListener);
+                mShareAPI.doOauthVerify(MainActivity.this, platform, umAuthListener);
+                mShareAPI.getPlatformInfo(MainActivity.this,platform, umAuthListener);
 
                 //添加打点上报代码
                 ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_LOGIN);
@@ -215,7 +222,7 @@ public class TaskListActivity extends BaseActivity {
     class LoginTask extends AsyncTask<String, Integer, Boolean> {
         @Override
         protected void onPreExecute() {
-            mProgressDialog = DialogUtil.showWaitDialog(TaskListActivity.this, getString(R.string.please_wait));
+            mProgressDialog = DialogUtil.showWaitDialog(MainActivity.this, getString(R.string.please_wait));
         }
 
         @Override
@@ -225,7 +232,7 @@ public class TaskListActivity extends BaseActivity {
             String name = params[2];
             try {
                 UserService userService = new UserService();
-                userService.login3rdAcountExist(loginFrom, loginAccount, name, TaskListActivity.this);
+                userService.login3rdAcountExist(loginFrom, loginAccount, name, MainActivity.this);
                 return true;
             } catch (Exception e) {
                 return false;
@@ -279,15 +286,15 @@ public class TaskListActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(String... params) {
-            List<String> userInfo = FileUtil.read(TaskListActivity.this, GeneralConstant.FILE_NAME_ACCOUNT);
+            List<String> userInfo = FileUtil.read(MainActivity.this, GeneralConstant.FILE_NAME_ACCOUNT);
             boolean result = false;
             try {
                 if (userInfo != null & !userInfo.isEmpty()) {
                     UserService userService = new UserService();
                     if (userInfo.get(0).equals("0")) {
-                        result = userService.login(userInfo.get(1), userInfo.get(2), TaskListActivity.this);
+                        result = userService.login(userInfo.get(1), userInfo.get(2), MainActivity.this);
                     } else if (userInfo.get(0).equals("1")) {
-                        result = userService.login3rdAcountExist(userInfo.get(1), userInfo.get(2), userInfo.get(3), TaskListActivity.this);
+                        result = userService.login3rdAcountExist(userInfo.get(1), userInfo.get(2), userInfo.get(3), MainActivity.this);
                     }
                 }
                 return result;

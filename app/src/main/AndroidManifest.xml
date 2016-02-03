@@ -32,14 +32,14 @@
             android:value="com.stevenkcolin.xiaobaiju.model" />
         <activity
             android:name=".activity.LoginActivity"
-            android:parentActivityName=".activity.TaskListActivity" >
+            android:parentActivityName=".activity.MainActivity" >
         </activity>
         <activity android:name=".activity.RegisterActivity" />
         <activity
             android:name=".activity.TaskDetailActivity"
-            android:parentActivityName=".activity.TaskListActivity" />
+            android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".activity.TaskListActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

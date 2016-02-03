@@ -72,7 +72,7 @@ public class LoginActivity extends BaseActivity {
         switch (requestCode) {
             case REGISTER_CODE:
                 if (resultCode == RESULT_OK) {
-                    Intent intent = new Intent(LoginActivity.this, TaskListActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 break;
@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity {
         protected void onPostExecute(Boolean result) {
             barProgressDialog.dismiss();
             if (result) {
-                Intent intent = new Intent(LoginActivity.this, TaskListActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             } else {
                 Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
