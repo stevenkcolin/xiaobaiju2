@@ -6,6 +6,7 @@
     <string name="prompt_password">密码</string>
     <string name="prompt_confirm_password">确认密码</string>
     <string name="action_sign_in">登录</string>
+    <string name="action_sign_out">退出登录</string>
     <string name="action_register">注册</string>
     <string name="info_register_success">注册成功</string>
     <string name="error_empty_phone">电话号码不能为空</string>
@@ -51,5 +52,6 @@
     <string name="action_settings">设置</string>
     <string name="hello_world">你好世界！</string>
     <string name="title_activity_xiaobaiju_sliding_menu">左滑菜单</string>
-    <string name="txt_about_us">欢迎访问我们的官方网站: XBJ.Life</string>
+    <string name="txt_about_us">关于 XBJ.Life</string>
+    <string name="txt_about_us_cotent">欢迎访问我们的官方网站: XBJ.Life</string>
 </resources>

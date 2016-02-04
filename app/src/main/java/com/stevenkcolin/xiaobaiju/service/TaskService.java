@@ -73,7 +73,6 @@ public class TaskService {
             task.set_id(taskObject.getString("_id"));
             task.setCompleted(taskObject.getBoolean("completed"));
             task.setTitle((taskObject.getString("title")));
-//            task.setDescrption(taskObject.getString("description"));
             task.setDueDate(DateUtil.toDate(taskObject.getString("dueDate")));
             task.setCreateDate(DateUtil.toDate(taskObject.getString("createDate")));
             TaskDao.save(task);
