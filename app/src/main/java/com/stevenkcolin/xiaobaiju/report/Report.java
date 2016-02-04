@@ -34,7 +34,9 @@ public class Report {
         }
         ReportInfo report = new ReportInfo();
         //给report赋值
-        report.userId = User.getUser().getId();
+        if (User.getUser().getId()!=null) {
+            report.userId = User.getUser().getId();
+        }
         report.actionCode = actionInfo.action_code;
         report.actionParam1 = actionInfo.param1;
         report.actionParam2 = actionInfo.param2;
