@@ -16,14 +16,6 @@
     <string name="error_duplicated_phone">此电话号码已注册</string>
     <string name="error_invalid_account">用户名或密码错误</string>
 
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-
     <!-- Strings related to task -->
     <string name="menu_add_task">添加任务</string>
     <string name="prompt_task_title">输入任务信息</string>
@@ -31,7 +23,7 @@
 
     <!-- Strings related to menu -->
     <string name="menu_task">任务</string>
-    <string name="menu_action">模板</string>
+    <string name="menu_action">行动</string>
     <string name="menu_mine">我的</string>
 
     <!-- Gener Message -->
