@@ -3,11 +3,11 @@ package com.stevenkcolin.xiaobaiju.service;
 import android.content.Context;
 
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
+import com.stevenkcolin.xiaobaiju.model.User;
 import com.stevenkcolin.xiaobaiju.util.FileUtil;
 import com.stevenkcolin.xiaobaiju.util.HttpUtil;
 import com.stevenkcolin.xiaobaiju.util.JSONUtil;
 import com.stevenkcolin.xiaobaiju.util.MD5Util;
-import com.stevenkcolin.xiaobaiju.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,6 +70,7 @@ public class UserService {
         Map<String, String> map = new HashMap<String, String>();
         map.put("phone", phone);
         JSONArray jsonArray = (JSONArray) HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + GeneralConstant.USER_FIND_URI, "POST", JSONUtil.stringifySingle(map));
+        //Log.e("test001",GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + GeneralConstant.USER_FIND_URI);
         if (jsonArray.length() > 0) {
             return false;
         }
@@ -81,6 +82,7 @@ public class UserService {
         map.put("loginFrom",loginFrom);
         map.put("loginAccount",loginAccount);
         JSONArray jsonArray = (JSONArray) HttpUtil.sendHttpRequest(GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + GeneralConstant.USER_LOGIN_OTHER_URI, "POST", JSONUtil.stringifySingle(map));
+//        Log.e("test001", GeneralConstant.SERVER_URL + GeneralConstant.USER_URI + GeneralConstant.USER_FIND_URI);
         if (jsonArray.length() > 0) {
             JSONObject jsonObject = jsonArray.getJSONObject(0);
             User user = User.getUser();
