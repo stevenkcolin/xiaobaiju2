@@ -31,13 +31,12 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.stevenkcolin.xiaobaiju.model" />
         <activity
-            android:name=".activity.LoginActivity"
-            android:parentActivityName=".activity.MainActivity" >
-        </activity>
+            android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity
-            android:name=".activity.TaskDetailActivity"
-            android:parentActivityName=".activity.MainActivity" />
+            android:name=".activity.TaskDetailActivity" />
+        <activity
+            android:name=".activity.ActionListActivity"/>
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
