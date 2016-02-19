@@ -61,8 +61,14 @@ public class Report {
         report.channelId = CommonUtil.getChannelId(context); //CommonUtility.getChannelId(context);
 
         Double[] coordinate = GeoUtil.getCoordinate(context);
-        report.latitude = coordinate[0] + "";
-        report.longitude = coordinate[1] + "";
+        if (coordinate!=null) {
+            if (coordinate[0] != null) {
+                report.latitude = coordinate[0] + "";
+            }
+            if (coordinate[1] != null) {
+                report.longitude = coordinate[1] + "";
+            }
+        }
         Log.d("report", "netType:" + report.netType + "----------" + "carrier:" + report.carrier + "--------" + "channelId:" + report.channelId);
 
         ReportService reportService = new ReportService();
