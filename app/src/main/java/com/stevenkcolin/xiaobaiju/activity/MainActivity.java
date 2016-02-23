@@ -1,6 +1,7 @@
 package com.stevenkcolin.xiaobaiju.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -75,6 +76,18 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.task_list_menu, menu);
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        /**
+         * 设置为竖屏
+         */
+        if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        super.onResume();
     }
 
     @Override
