@@ -96,7 +96,7 @@ public class ActionListFragment extends BaseFragment {
         TableRow tableRow = null;
         for (final Template template : templateList) {
             if (i % 2 == 0) {
-                tableRow = (TableRow)inflater.inflate(R.layout.row_template, mTableLayoutMy, false);
+                tableRow = (TableRow)inflater.inflate(R.layout.sub_row_template, mTableLayoutMy, false);
                 btnId = R.id.template_left;
             } else {
                 btnId = R.id.template_right;

@@ -5,7 +5,7 @@ package com.stevenkcolin.xiaobaiju.constant;
  */
 public class GeneralConstant {
     public final static String SERVER = "www.stevenkcolin.com";
-//    public final static String SERVER = "192.168.1.100";
+//    public final static String SERVER = "192.168.1.106";
     public final static String PORT = "3000";
     public final static String ROOT_URL = "api";
     public final static String SERVER_URL = "http://" + SERVER + ":" + PORT + "/" + ROOT_URL + "/";

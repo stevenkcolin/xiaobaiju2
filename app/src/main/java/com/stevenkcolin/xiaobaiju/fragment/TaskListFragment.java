@@ -75,7 +75,7 @@ public class TaskListFragment extends BaseFragment {
     public void fresh() {
         //加载所有的task
         List<Task> taskList = TaskDao.getTaskList();
-        TaskListAdapter adapter = new TaskListAdapter(getActivity(), R.layout.task_list_item, taskList);
+        TaskListAdapter adapter = new TaskListAdapter(getActivity(), R.layout.sub_task_list_item, taskList);
         ListView listView = (ListView)getView().findViewById(R.id.task_list);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
