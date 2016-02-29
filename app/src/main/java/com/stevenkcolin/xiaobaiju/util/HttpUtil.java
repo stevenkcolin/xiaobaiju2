@@ -8,6 +8,7 @@ import com.stevenkcolin.xiaobaiju.exception.ServerException;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -75,7 +76,13 @@ public class HttpUtil {
                 DataOutputStream out = new DataOutputStream(connection.getOutputStream());
                 out.write(body.getBytes("UTF8"));
             }
-            int status = connection.getResponseCode();
+
+            int status;
+            try {
+                status = connection.getResponseCode();
+            } catch (IOException e) {
+                status = connection.getResponseCode();
+            }
             InputStream in = null;
             if (status < 400) {
                 in = connection.getInputStream();
