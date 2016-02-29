@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:scrollbars="none">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/parent_layout">
 
-        <RelativeLayout
-            android:id="@+id/success_layout"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:id="@+id/parent_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:src="@drawable/action_header_temp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true" />
-        </RelativeLayout>
-        
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/success_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/action_header_temp" />
+            </RelativeLayout>
+        </LinearLayout>
+        <Button
+            android:id="@+id/add_postAction"
+            android:layout_width="@dimen/plus_button_width"
+            android:layout_height="@dimen/plus_button_height"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/plus_button_horizontal_margin"
+            android:layout_marginBottom="@dimen/plus_button_vertical_margin"
+            android:background="@drawable/roundedbutton"
+            android:text="@string/txt_plus_btn"
+            android:textColor="@color/colorBackground"
+            android:textSize="@dimen/plus_button_size"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 </ScrollView>
