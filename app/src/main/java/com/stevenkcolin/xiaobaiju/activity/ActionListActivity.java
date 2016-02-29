@@ -1,11 +1,15 @@
 package com.stevenkcolin.xiaobaiju.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,6 +34,7 @@ public class ActionListActivity extends BaseActivity {
     private LinearLayout layoutParent;
 
     private Template template;
+    private int PostAction_ADD = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,31 @@ public class ActionListActivity extends BaseActivity {
 
         setTitle(template.getName());
 
+        final Button mButton = (Button)this.findViewById(R.id.add_postAction);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPostAction();
+            }
+        });
+
         new GetTemplateDetail().execute();
+    }
+
+    //添加PostAction
+    public void addPostAction(){
+//        //打开TaskDetailActivity 来添加task详情
+//        Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
+//        intent.setAction("add");
+//        startActivityForResult(intent, TASK_ADD);
+//        //添加打点上报代码
+//        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_ADDTASK);
+//        mReport.saveOnClick(getActivity(), mActionInfo);
+        Intent intent = new Intent(this, com.stevenkcolin.xiaobaiju.activity.PostAction.class);
+        intent.setAction("add");
+        startActivityForResult(intent,PostAction_ADD);
+        Log.e("eeeee", "addPostAction ");
+
     }
 
     class GetTemplateDetail extends AsyncTask<Void, Void, Boolean> {

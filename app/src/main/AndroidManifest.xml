@@ -10,6 +10,23 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- renren sso Permission for Unit Test -->
+    <!-- QQ、QQ空间所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
         android:name="com.orm.SugarApp"
@@ -30,13 +47,11 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.stevenkcolin.xiaobaiju.model" />
-        <activity
-            android:name=".activity.LoginActivity" />
+
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity
-            android:name=".activity.TaskDetailActivity" />
-        <activity
-            android:name=".activity.ActionListActivity"/>
+        <activity android:name=".activity.TaskDetailActivity" />
+        <activity android:name=".activity.ActionListActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
@@ -49,8 +64,8 @@
         <!-- tencent -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
             android:icon="@mipmap/ic_launcher"
+            android:launchMode="singleTask"
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -63,9 +78,10 @@
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
-            android:screenOrientation="portrait"
             android:icon="@mipmap/ic_launcher"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="false" />
@@ -75,31 +91,20 @@
             android:name="UMENG_APPKEY"
             android:value="5650f168e0f55ab540001b63" />
 
-        <!--<meta-data-->
-            <!--android:name="UMENG_APPKEY"-->
-            <!--android:value="561cae6ae0f55abd990035bf" >-->
-        <!--</meta-data>-->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_APPKEY" -->
+        <!-- android:value="561cae6ae0f55abd990035bf" > -->
+        <!-- </meta-data> -->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="xiaobaiju" >
         </meta-data>
+
+        <activity
+            android:name=".activity.PostAction"
+            android:label="@string/title_activity_post_action"
+            android:parentActivityName=".activity.TaskDetailActivity">
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- renren sso Permission for Unit Test -->
-    <!-- QQ、QQ空间所需权限 -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
 </manifest>
