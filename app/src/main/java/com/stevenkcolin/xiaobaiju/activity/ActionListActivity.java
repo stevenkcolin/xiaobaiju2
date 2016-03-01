@@ -158,7 +158,6 @@ public class ActionListActivity extends BaseActivity {
                 Intent intent = new Intent(getBaseContext(), PostActionDetail.class);
                 intent.setAction("edit");
                 intent.putExtra("PostAction", editPostAction);
-
                 startActivityForResult(intent, PostAction_Edt);
             }
         });

@@ -6,23 +6,25 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.dao.PostActionDao;
 import com.stevenkcolin.xiaobaiju.model.PostAction;
 
 public class PostActionDetail extends BaseActivity {
 
-    private PostAction postAction;
-    private EditText editTitle;
+    private PostAction mPostAction;
+    private EditText mEditTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_action);
 
-        postAction = getIntent().getSerializableExtra("PostAction") == null ? null : (PostAction)getIntent().getSerializableExtra("PostAction");
-        if (postAction != null) {
-            String strTitle = postAction.getTitle().toString();
-            editTitle = (EditText)findViewById(R.id.edtTitlePostActions);
-            editTitle.setText(strTitle);
+        mPostAction = getIntent().getSerializableExtra("PostAction") == null ? null : (PostAction)getIntent().getSerializableExtra("PostAction");
+        mEditTitle = (EditText)findViewById(R.id.edtTitlePostActions);
+
+        if (mPostAction != null) {
+            String strTitle = mPostAction.getTitle().toString();
+            mEditTitle.setText(strTitle);
         }
     }
 
@@ -46,5 +48,31 @@ public class PostActionDetail extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //点击返回的时候，会触发onPause事件，然后保存taskDetail中的数据
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        saveData();
+
+    }
+
+    //保存taskdetail中的数据
+    private void saveData()
+    {
+        //取得editTitle的值
+        String title = mEditTitle.getText().toString();
+        if (title.trim().length()>0) {
+//            创建task对象, 并保存task
+            if (mPostAction == null) {
+                mPostAction = new PostAction();
+                mPostAction.setTitle(title);
+            } else {
+                mPostAction.setTitle(title);
+            }
+            PostActionDao.save(mPostAction);
+        }
     }
 }
