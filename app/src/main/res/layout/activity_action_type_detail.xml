@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.stevenkcolin.xiaobaiju.activity.ActionTypeDetail">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:id="@+id/parent_ActionType_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+        <Button
+            android:id="@+id/add_postAction"
+            android:layout_width="@dimen/plus_button_width"
+            android:layout_height="@dimen/plus_button_height"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/plus_button_horizontal_margin"
+            android:layout_marginBottom="@dimen/plus_button_vertical_margin"
+            android:background="@drawable/roundedbutton"
+            android:text="@string/txt_plus_btn"
+            android:textColor="@color/colorBackground"
+            android:textSize="@dimen/plus_button_size"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

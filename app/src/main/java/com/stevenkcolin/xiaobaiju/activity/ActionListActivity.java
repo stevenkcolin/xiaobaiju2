@@ -35,6 +35,7 @@ public class ActionListActivity extends BaseActivity {
     private Template template;
     private int PostAction_ADD = 1;
     private int PostAction_Edt = 2;
+    private int ActionTypeDetail_view = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,19 +61,10 @@ public class ActionListActivity extends BaseActivity {
 
     //添加PostAction
     public void addPostAction(){
-//        //打开TaskDetailActivity 来添加task详情
-//        Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
-//        intent.setAction("add");
-//        startActivityForResult(intent, TASK_ADD);
-//        //添加打点上报代码
-//        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_ADDTASK);
-//        mReport.saveOnClick(getActivity(), mActionInfo);
         Intent intent = new Intent(this, PostActionDetail.class);
         intent.setAction("add");
 
         startActivityForResult(intent,PostAction_ADD);
-
-
     }
 
     class GetTemplateDetail extends AsyncTask<Void, Void, Boolean> {
@@ -117,14 +109,40 @@ public class ActionListActivity extends BaseActivity {
 
     }
 
-    private void renderActionType(ActionType actionType, ViewGroup layout) {
+    private void renderActionType(final ActionType actionType, ViewGroup layout) {
+
+        LinearLayout tmpLL = new LinearLayout(this);
+        tmpLL.setOrientation(LinearLayout.HORIZONTAL);
+
         TextView textView = new TextView(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(DisplayUtil.px2dp(this, 5), DisplayUtil.px2dp(this, 10), 0, DisplayUtil.px2dp(this, 10));
         textView.setLayoutParams(lp);
         textView.setTextSize(20);
         textView.setText(actionType.getName());
-        layout.addView(textView);
+        //layout.addView(textView);
+
+        Button btnMore = new Button(this);
+        LinearLayout.LayoutParams lpBtn = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lpBtn.setMargins(DisplayUtil.px2dp(this, 5), DisplayUtil.px2dp(this, 10), 0, DisplayUtil.px2dp(this, 10));
+        btnMore.setLayoutParams(lpBtn);
+        btnMore.setTextSize(20);
+        btnMore.setText(getString(R.string.txt_ActionList_More));
+
+        btnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ActionTypeDetail.class);
+                intent.setAction("view");
+                intent.putExtra("ActionType", actionType);
+                startActivityForResult(intent, ActionTypeDetail_view);
+            }
+        });
+        //layout.addView(btnMore);
+
+        tmpLL.addView(textView);
+        tmpLL.addView(btnMore);
+        layout.addView(tmpLL);
         List<PostAction> postActionList = actionType.getPostActionList();
         int i = 0;
         for (PostAction postAction : postActionList) {

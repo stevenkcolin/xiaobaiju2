@@ -103,7 +103,11 @@
         <activity
             android:name=".activity.PostActionDetail"
             android:label="@string/title_activity_post_action"
-            android:parentActivityName=".activity.TaskDetailActivity">
+            android:parentActivityName=".activity.TaskDetailActivity" >
+        </activity>
+        <activity
+            android:name=".activity.ActionTypeDetail"
+            android:label="@string/title_activity_action_type_detail" >
         </activity>
     </application>
 
