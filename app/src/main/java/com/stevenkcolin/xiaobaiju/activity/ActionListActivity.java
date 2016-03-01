@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,6 +34,7 @@ public class ActionListActivity extends BaseActivity {
 
     private Template template;
     private int PostAction_ADD = 1;
+    private int PostAction_Edt = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +67,11 @@ public class ActionListActivity extends BaseActivity {
 //        //添加打点上报代码
 //        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TASKLIST_ADDTASK);
 //        mReport.saveOnClick(getActivity(), mActionInfo);
-        Intent intent = new Intent(this, com.stevenkcolin.xiaobaiju.activity.PostAction.class);
+        Intent intent = new Intent(this, PostActionDetail.class);
         intent.setAction("add");
+
         startActivityForResult(intent,PostAction_ADD);
-        Log.e("eeeee", "addPostAction ");
+
 
     }
 
@@ -144,11 +145,24 @@ public class ActionListActivity extends BaseActivity {
         return relativeLayout;
     }
 
-    private void renderPostActionTitle(PostAction postAction, ViewGroup layout) {
+    private void renderPostActionTitle(final PostAction postAction, ViewGroup layout) {
         TextView textView = new TextView(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         textView.setLayoutParams(lp);
         textView.setText(postAction.getTitle());
+
+        final PostAction editPostAction = postAction;
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), PostActionDetail.class);
+                intent.setAction("edit");
+                intent.putExtra("PostAction", editPostAction);
+
+                startActivityForResult(intent, PostAction_Edt);
+            }
+        });
+
         layout.addView(textView);
     }
 
@@ -161,6 +175,19 @@ public class ActionListActivity extends BaseActivity {
         imageView.setImageDrawable(drawable);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setAdjustViewBounds(true);
+
+        final PostAction editPostAction = postAction;
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), PostActionDetail.class);
+                intent.setAction("edit");
+                intent.putExtra("PostAction", editPostAction);
+                startActivityForResult(intent, PostAction_Edt);
+            }
+        });
+
+
         layout.addView(imageView);
     }
 

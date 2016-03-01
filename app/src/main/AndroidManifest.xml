@@ -101,7 +101,7 @@
         </meta-data>
 
         <activity
-            android:name=".activity.PostAction"
+            android:name=".activity.PostActionDetail"
             android:label="@string/title_activity_post_action"
             android:parentActivityName=".activity.TaskDetailActivity">
         </activity>

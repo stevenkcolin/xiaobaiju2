@@ -3,15 +3,27 @@ package com.stevenkcolin.xiaobaiju.activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.model.PostAction;
 
-public class PostAction extends BaseActivity {
+public class PostActionDetail extends BaseActivity {
+
+    private PostAction postAction;
+    private EditText editTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_action);
+
+        postAction = getIntent().getSerializableExtra("PostAction") == null ? null : (PostAction)getIntent().getSerializableExtra("PostAction");
+        if (postAction != null) {
+            String strTitle = postAction.getTitle().toString();
+            editTitle = (EditText)findViewById(R.id.edtTitlePostActions);
+            editTitle.setText(strTitle);
+        }
     }
 
     @Override
