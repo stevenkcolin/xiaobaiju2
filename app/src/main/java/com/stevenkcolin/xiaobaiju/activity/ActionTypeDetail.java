@@ -20,11 +20,6 @@ public class ActionTypeDetail extends BaseActivity {
     private ActionType mActionType;
     private LinearLayout mLayoutParent;
 
-    private int PostAction_ADD = 1;
-    private int PostAction_Edt = 2;
-    private int ActionTypeDetail_view = 3;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +76,6 @@ public class ActionTypeDetail extends BaseActivity {
     public void addPostAction(){
         Intent intent = new Intent(this, PostActionDetail.class);
         intent.setAction("add");
-        startActivityForResult(intent, PostAction_ADD);
+        startActivity(intent);
     }
 }

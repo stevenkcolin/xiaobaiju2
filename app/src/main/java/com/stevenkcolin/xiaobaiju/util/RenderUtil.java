@@ -6,14 +6,19 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.activity.ActionTypeDetail;
 import com.stevenkcolin.xiaobaiju.activity.PostActionDetail;
+import com.stevenkcolin.xiaobaiju.model.ActionType;
 import com.stevenkcolin.xiaobaiju.model.PostAction;
+
+import java.util.List;
 
 /**
  * Created by linchen on 3/2/16.
@@ -76,6 +81,38 @@ public class RenderUtil {
         layout.addView(imageView);
     }
 
+    public static ViewGroup renderActionTypeNameMore(final Context context,final ActionType actionType){
+        LinearLayout tmpLL = new LinearLayout(context);
+        tmpLL.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView textView = new TextView(context);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(DisplayUtil.px2dp(context, 5), DisplayUtil.px2dp(context, 10), 0, DisplayUtil.px2dp(context, 10));
+        textView.setLayoutParams(lp);
+        textView.setTextSize(20);
+        textView.setText(actionType.getName());
+
+        Button btnMore = new Button(context);
+        LinearLayout.LayoutParams lpBtn = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lpBtn.setMargins(DisplayUtil.px2dp(context, 5), DisplayUtil.px2dp(context, 10), 0, DisplayUtil.px2dp(context, 10));
+        btnMore.setLayoutParams(lpBtn);
+        btnMore.setTextSize(20);
+        btnMore.setText(context.getString(R.string.txt_ActionList_More));
+
+        btnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ActionTypeDetail.class);
+                intent.setAction("view");
+                intent.putExtra("ActionType", actionType);
+                context.startActivity(intent);
+            }
+        });
+        tmpLL.addView(textView);
+        tmpLL.addView(btnMore);
+        return tmpLL;
+    }
+
     public static ViewGroup renderPostActions(final Context context, ViewGroup layout) {
         RelativeLayout relativeLayout = new RelativeLayout(context);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DisplayUtil.px2dp(context, 50));
@@ -85,4 +122,17 @@ public class RenderUtil {
         return relativeLayout;
     }
 
+    public static void renderActionType(final Context context, final ActionType actionType, ViewGroup layout) {
+        //给页面添加ActionType名称和更多按钮
+        layout.addView(RenderUtil.renderActionTypeNameMore(context, actionType));
+        //根据某个ActionType获得postActionList
+        List<PostAction> postActionList = actionType.getPostActionList();
+        //展示每个postAction
+        for (PostAction postAction : postActionList) {
+            RenderUtil.renderDivider(context, layout);
+            ViewGroup relativeGroup = RenderUtil.renderPostActions(context,layout);
+            RenderUtil.renderPostActionTitle(context, postAction, relativeGroup);
+            RenderUtil.renderPostActionImage(context, postAction, relativeGroup);
+        }
+    }
 }

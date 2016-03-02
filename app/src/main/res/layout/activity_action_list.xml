@@ -24,6 +24,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/action_header_temp" />
             </RelativeLayout>
+
         </LinearLayout>
         <Button
             android:id="@+id/add_postAction"
