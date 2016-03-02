@@ -51,7 +51,8 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.TaskDetailActivity" />
-        <activity android:name=".activity.ActionListActivity" />
+        <activity android:name=".activity.ActionListActivity"
+            android:parentActivityName=".activity.MainActivity"/>
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
@@ -107,7 +108,8 @@
         </activity>
         <activity
             android:name=".activity.ActionTypeDetail"
-            android:label="@string/title_activity_action_type_detail" >
+            android:label="@string/title_activity_action_type_detail"
+            android:parentActivityName=".activity.TaskDetailActivity" >
         </activity>
     </application>
 

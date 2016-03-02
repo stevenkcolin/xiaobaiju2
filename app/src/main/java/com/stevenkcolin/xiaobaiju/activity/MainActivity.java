@@ -39,13 +39,17 @@ public class MainActivity extends BaseActivity {
         CrashReport.initCrashReport(this, "900018308", false);
         setContentView(R.layout.activity_main);
 
-        mFragment = mFragmentTask;
+        mFragment = mFragmentAction;
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
 
         new LoginBGTask().execute();
 
         /*底部菜单事件*/
         RadioGroup rg = (RadioGroup) findViewById(R.id.tab_menu);
+        rg.check(R.id.menu_action);
+
+
+
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

@@ -146,7 +146,7 @@ public class ActionListActivity extends BaseActivity {
         List<PostAction> postActionList = actionType.getPostActionList();
         int i = 0;
         for (PostAction postAction : postActionList) {
-                renderDivider(layoutParent);
+            renderDivider(layoutParent);
             ViewGroup relativeGroup = renderPostActions(layout);
             renderPostActionTitle(postAction, relativeGroup);
             renderPostActionImage(postAction, relativeGroup);
@@ -183,7 +183,7 @@ public class ActionListActivity extends BaseActivity {
         layout.addView(textView);
     }
 
-    private void renderPostActionImage(PostAction postAction, ViewGroup layout) {
+     void renderPostActionImage(PostAction postAction, ViewGroup layout) {
         ImageView imageView = new ImageView(this);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -203,8 +203,6 @@ public class ActionListActivity extends BaseActivity {
                 startActivityForResult(intent, PostAction_Edt);
             }
         });
-
-
         layout.addView(imageView);
     }
 

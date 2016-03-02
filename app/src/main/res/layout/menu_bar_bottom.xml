@@ -19,18 +19,6 @@
         android:background="@drawable/menuborder"
         android:orientation="horizontal">
         <RadioButton
-            android:id="@+id/menu_task"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center_horizontal|bottom"
-            android:textColor="@drawable/menu_selector_color"
-            android:text="@string/menu_task"
-            android:drawablePadding="3dp"/>
-        <RadioButton
             android:id="@+id/menu_action"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,6 +29,18 @@
             android:gravity="center_horizontal|bottom"
             android:textColor="@drawable/menu_selector_color"
             android:text="@string/menu_action"
+            android:drawablePadding="3dp"/>
+        <RadioButton
+            android:id="@+id/menu_task"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center_horizontal|bottom"
+            android:textColor="@drawable/menu_selector_color"
+            android:text="@string/menu_task"
             android:drawablePadding="3dp"/>
         <RadioButton
             android:id="@+id/menu_mine"
