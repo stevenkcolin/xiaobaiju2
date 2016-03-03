@@ -41,4 +41,5 @@
     <string name="hintTitlePostActions">请输入PostActions 的内容</string>
     <string name="txt_ActionList_More">More</string>
     <string name="title_activity_action_type_detail">ActionTypeDetail</string>
+    <string name="action_follow">follow</string>
 </resources>

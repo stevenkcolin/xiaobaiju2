@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -47,6 +48,13 @@ public class ActionListActivity extends BaseActivity {
         });
         //获得TemplateDetail详情
         new GetTemplateDetail().execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_action_list, menu);
+        return true;
     }
 
     class GetTemplateDetail extends AsyncTask<Void, Void, Boolean> {
