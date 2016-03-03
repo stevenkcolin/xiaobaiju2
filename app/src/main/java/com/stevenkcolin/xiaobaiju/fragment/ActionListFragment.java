@@ -15,7 +15,7 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.stevenkcolin.xiaobaiju.R;
-import com.stevenkcolin.xiaobaiju.activity.ActionListActivity;
+import com.stevenkcolin.xiaobaiju.activity.TemplateDetailActivity;
 import com.stevenkcolin.xiaobaiju.activity.LoginActivity;
 import com.stevenkcolin.xiaobaiju.model.Template;
 import com.stevenkcolin.xiaobaiju.service.ActionService;
@@ -41,8 +41,8 @@ public class ActionListFragment extends BaseFragment {
 
         mTabHost = (TabHost)getView().findViewById(R.id.tabHost);
         mTabHost.setup();
-        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator(getString(R.string.template_follow)).setContent(R.id.my));
-        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator(getString(R.string.template_other)).setContent(R.id.other));
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator(getString(R.string.txt_Template_follow)).setContent(R.id.my));
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator(getString(R.string.txt_Template_other)).setContent(R.id.other));
 
         mTableLayoutMy = (TableLayout)getView().findViewById(R.id.my);
 
@@ -108,7 +108,7 @@ public class ActionListFragment extends BaseFragment {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ActionListActivity.class);
+                    Intent intent = new Intent(getActivity(), TemplateDetailActivity.class);
                     Bundle b = new Bundle();
                     b.putSerializable("template", template);
                     intent.putExtra("info", b);

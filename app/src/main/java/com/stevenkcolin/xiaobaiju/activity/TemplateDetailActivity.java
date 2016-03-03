@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Pengfei on 2016/2/19.
  */
-public class ActionListActivity extends BaseActivity {
+public class TemplateDetailActivity extends BaseActivity {
 
     private LinearLayout mLayoutParent;
     private Template mTemplate;
@@ -62,7 +62,7 @@ public class ActionListActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             //显示请等待的滚动条
-            barProgressDialog = DialogUtil.showWaitDialog(ActionListActivity.this, getString(R.string.please_wait));
+            barProgressDialog = DialogUtil.showWaitDialog(TemplateDetailActivity.this, getString(R.string.please_wait));
         }
 
         @Override
@@ -84,7 +84,7 @@ public class ActionListActivity extends BaseActivity {
                 //将从后台得到mTemplate在前端展示出来
                 renderActionTypeList(mTemplate.getActionTypeList());
             } else {
-                Toast.makeText(ActionListActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TemplateDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
             }
         }
     }
