@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.activity.NewLoginActivity;
 import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.model.User;
@@ -38,6 +39,9 @@ public class MineFragment extends BaseFragment {
     private TextView txtName;
     private Button btnLogin;
     private Button btnLogout;
+
+    private NewLoginFragment mFragmentLogin = new NewLoginFragment();
+    private BaseFragment mFragment;
 
     @Nullable
     @Override
@@ -116,9 +120,31 @@ public class MineFragment extends BaseFragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginQQ(view);
+                startNewLoginPage();
             }
         });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                return;
+            }
+        });
+    }
+
+    private void startNewLoginFragment() {
+//        Intent intent = new Intent(getActivity(),NewLoginFragment.class);
+//        intent.setAction("Login");
+//        startActivity(intent);
+        mFragment = mFragmentLogin;
+        //this.getActivity().getSupportFragmentManager()
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.login_account, mFragment).commit();
+
+    }
+
+    private void startNewLoginPage() {
+        Intent intent = new Intent(getActivity(), NewLoginActivity.class);
+        intent.setAction("Login");
+        startActivity(intent);
     }
 
     //添加登录QQ的代码

@@ -28,6 +28,8 @@ public class ActionTypeDetail extends BaseActivity {
         mActionType = getIntent().getSerializableExtra("ActionType") == null ? null : (ActionType)getIntent().getSerializableExtra("ActionType");
         //mLayout=动态加载的主页面
         mLayoutParent = (LinearLayout)findViewById(R.id.parent_ActionType_layout);
+        //设置页面标题为该ActionType的名字
+        setTitle(mActionType.getName());
         //从ActionType中获得postActionList。
         List<PostAction> postActionList = mActionType.getPostActionList();
         //在mLayoutParent上面一个个添加PostActions

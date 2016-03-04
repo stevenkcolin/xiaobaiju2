@@ -1,21 +1,23 @@
 <resources>
     <string name="app_name">XiaoBaiJu</string>
-
+    <string name="app_settings">settings</string>
     <!-- Strings related to login -->
     <string name="prompt_phone">Phone</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_confirm_password">Confirm Password</string>
+
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
+    <string name="action_follow">follow</string>
+    <string name="action_sign_out">Sign Out</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_refresh">refresh</string>
+    <string name="action_settings">Settings</string>
+
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="menu_back_task">back</string>
-    <string name="app_settings">settings</string>
     <string name="error_duplicated_phone">the phone number is registered</string>
     <string name="error_empty_confirmPwd">empty confirmPwd</string>
     <string name="error_empty_password">empty password</string>
@@ -24,31 +26,39 @@
     <string name="error_network">error network</string>
     <string name="error_notequal_pwd">error password not equal</string>
     <string name="error_server">server error</string>
-    <string name="info_register_success">Register Succeed!</string>
-    <string name="menu_add_task">Add Task</string>
-    <string name="please_wait">Please Wait</string>
-    <string name="prompt_task_title">Input task info</string>
-    <string name="prompt_task_description">Task Descrption</string>
-    <string name="txt_plus_btn">+</string>
-    <string name="action_refresh">refresh</string>
-    <string name="title_activity_xiaobaiju_sliding_menu">xiaobaijuSlidingMenu</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="txt_about_us">welcome to our website: XBJ.Life</string>
-    <string name="title_activity_post_action">PostAction</string>
-    <string name="txt_PostAction_Context">Context</string>
-    <string name="hint_PostActions_Title">Please input PostActions Title</string>
-    <string name="txt_ActionList_More">More</string>
-    <string name="title_activity_action_type_detail">ActionTypeDetail</string>
-    <string name="action_follow">follow</string>
-    <string name="action_sign_out">Sign Out</string>
-    <string name="action_delete">Delete</string>
     <string name="error_empty_title">please input task title</string>
+
+    <string name="menu_add_task">Add Task</string>
     <string name="menu_action">Action</string>
     <string name="menu_mine">My</string>
     <string name="menu_task">Task</string>
+    <string name="menu_back_task">back</string>
+
     <string name="txt_Template_follow">Follow</string>
     <string name="txt_Template_other">Other</string>
     <string name="txt_about_us_cotent">welcome to our website: XBJ.Life</string>
+    <string name="txt_ActionList_More">More</string>
+    <string name="txt_plus_btn">+</string>
+    <string name="txt_about_us">welcome to our website: XBJ.Life</string>
+    <string name="txt_PostAction_Context">Context</string>
+    <string name="txt_QQ_Login">QQ Login</string>
+    <string name="txt_Weixin_Login">Weixin Login</string>
+    <string name="txt_Weibo_Login">Weibo Login</string>
+
+    <string name="info_register_success">Register Succeed!</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="prompt_task_title">Input task info</string>
+    <string name="prompt_task_description">Task Descrption</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_post_action">PostAction</string>
+    <string name="title_activity_action_type_detail">ActionTypeDetail</string>
+    <string name="title_activity_xiaobaiju_sliding_menu">xiaobaijuSlidingMenu</string>
+    <string name="hint_PostActions_Title">Please input PostActions Title</string>
+    <string name="title_activity_new_login">NewLoginActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

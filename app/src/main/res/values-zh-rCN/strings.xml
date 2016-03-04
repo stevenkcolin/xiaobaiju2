@@ -62,4 +62,7 @@
     <string name="prompt_task_description">任务描述</string>
     <string name="title_activity_action_type_detail">ActionType详细页</string>
     <string name="title_activity_post_action">PostAction</string>
+    <string name="txt_QQ_Login">QQ 登录</string>
+    <string name="txt_Weibo_Login">微博登录</string>
+    <string name="txt_Weixin_Login">微信登录</string>
 </resources>
