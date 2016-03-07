@@ -61,8 +61,10 @@
     <string name="permission_rationale">需要提供邮箱</string>
     <string name="prompt_task_description">任务描述</string>
     <string name="title_activity_action_type_detail">ActionType详细页</string>
-    <string name="title_activity_post_action">PostAction</string>
+    <string name="title_activity_post_action">PostAction页面</string>
     <string name="txt_QQ_Login">QQ 登录</string>
     <string name="txt_Weibo_Login">微博登录</string>
     <string name="txt_Weixin_Login">微信登录</string>
+    <string name="title_activity_new_login">登录页面</string>
+    <string name="hello_blank_fragment">你好世界！</string>
 </resources>
