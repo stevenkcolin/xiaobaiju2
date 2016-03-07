@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
         new LoginBGTask().execute();
 
         /*底部菜单事件*/
-        RadioGroup rg = (RadioGroup) findViewById(R.id.tab_menu);
+        final RadioGroup rg = (RadioGroup) findViewById(R.id.tab_menu);
         rg.check(R.id.menu_action);
 
 
@@ -54,11 +54,11 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.menu_task:
-                        mFragment = mFragmentTask;
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
-                        changeMenuIcon(true, false, false);
-                        break;
+//                    case R.id.menu_task:
+//                        mFragment = mFragmentTask;
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
+//                        changeMenuIcon(true, false, false);
+//                        break;
                     case R.id.menu_action:
                         mFragment = mFragmentAction;
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
@@ -153,10 +153,10 @@ public class MainActivity extends BaseActivity {
     }
 
         private void changeMenuIcon(boolean main, boolean account, boolean more) {
-            RadioButton radioMain = (RadioButton)findViewById(R.id.menu_task);
+//            RadioButton radioMain = (RadioButton)findViewById(R.id.menu_task);
             RadioButton radioAccount = (RadioButton)findViewById(R.id.menu_action);
             RadioButton radioMore = (RadioButton)findViewById(R.id.menu_mine);
-            radioMain.setChecked(main);
+//            radioMain.setChecked(main);
             radioAccount.setChecked(account);
             radioMore.setChecked(more);
         }
