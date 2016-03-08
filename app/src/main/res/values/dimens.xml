@@ -14,4 +14,10 @@
     <dimen name="slidingmenu_offset">100dp</dimen>
     <dimen name="list_padding">5dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
+    <!--template button settings-->
+    <dimen name="btnTemplateRadius">5dp</dimen>
+    <dimen name="btnTemplateTop">10dp</dimen>
+    <dimen name="btnTemplateBottom">10dp</dimen>
+    <dimen name="btnTemplateLeft">10dp</dimen>
+    <dimen name="btnTemplateRight">10dp</dimen>
 </resources>

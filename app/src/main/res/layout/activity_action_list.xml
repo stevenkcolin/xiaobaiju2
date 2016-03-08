@@ -11,7 +11,8 @@
             android:id="@+id/parent_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/colorBackground">
             <LinearLayout
                 android:id="@+id/success_layout"
                 android:layout_width="match_parent"
@@ -35,7 +36,7 @@
             android:layout_marginBottom="@dimen/plus_button_vertical_margin"
             android:background="@drawable/roundedbutton"
             android:text="@string/txt_plus_btn"
-            android:textColor="@color/colorBackground"
+            android:textColor="@color/colorRoundedButtonText"
             android:textSize="@dimen/plus_button_size"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"

@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stevenkcolin.xiaobaiju.R;
@@ -44,12 +43,6 @@ public class ActionListFragment extends BaseFragment {
         mTabHost.setup();
         mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator(getString(R.string.txt_Template_follow)).setContent(R.id.my));
         mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator(getString(R.string.txt_Template_other)).setContent(R.id.other));
-
-        for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
-            View view = mTabHost.getTabWidget().getChildAt(i);
-            TextView tv = (TextView) mTabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-            tv.setTextColor(this.getResources().getColor(R.color.colorText));
-        }
 
         mTableLayoutMy = (TableLayout)getView().findViewById(R.id.my);
 
