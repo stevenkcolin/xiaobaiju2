@@ -3,7 +3,7 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorBackground">#e1f4f4</color>
     <color name="colorTemplateBG">#bbc0c0</color>
-    <color name="menu_bar_colorBackground">#ffffff</color>
+    <color name="color_menu_bar_Background">#ffffff</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorTextSelected">#4b7cf8</color>
     <color name="colorText">#333333</color>

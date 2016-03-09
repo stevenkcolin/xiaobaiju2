@@ -20,4 +20,6 @@
     <dimen name="btnTemplateBottom">10dp</dimen>
     <dimen name="btnTemplateLeft">10dp</dimen>
     <dimen name="btnTemplateRight">10dp</dimen>
+    <!--menu bar bottom settings-->
+    <dimen name="bottom_menu_bar_text_size">18dp</dimen>
 </resources>
