@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.model.ActionType;
 import com.stevenkcolin.xiaobaiju.model.PostAction;
+import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.util.RenderUtil;
 
 import java.util.List;
@@ -62,6 +64,15 @@ public class ActionTypeDetail extends BaseActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        //添加打点上报代码
+        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_ACTIONTYPE_DETAIL_BACK);
+        mReport.saveOnClick(getBaseContext(), mActionInfo);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -79,5 +90,9 @@ public class ActionTypeDetail extends BaseActivity {
         Intent intent = new Intent(this, PostActionDetail.class);
         intent.setAction("add");
         startActivity(intent);
+
+        //添加打点上报代码
+        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_ACTIONTYPE_DETAIL_ADD);
+        mReport.saveOnClick(getBaseContext(), mActionInfo);
     }
 }

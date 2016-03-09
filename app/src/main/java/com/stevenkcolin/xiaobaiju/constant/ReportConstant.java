@@ -12,12 +12,13 @@ public class ReportConstant {
     //taskList的pageId=101
     //taskDetail的pageId=102;
 
-    //侧滑菜单中的按钮
-    public static final int REPORT_MENU_LOGIN = 100001001;
-    public static final int REPORT_MENU_ABOUTUS = 100001002;
-    //tasklist中用户操作侧滑菜单操作。侧滑菜单的moduleId=011
-    public static final int REPORT_TASKLIST_MENUSHOW = 101011001;
-    public static final int REPORT_TASKLIST_MENUHIDE = 101011002;
+//    //侧滑菜单中的按钮
+//    public static final int REPORT_MENU_LOGIN = 100001001;
+//    public static final int REPORT_MENU_ABOUTUS = 100001002;
+    //我的菜单
+    public static final int REPORT_MY_LOGIN = 100001001;
+    public static final int REPORT_MY_ABOUTUS = 100001002;
+    public static final int REPORT_MY_LOGOUT = 100001003;
     //taskList中上方actionbar的按钮，actionBar的moduleId一律001
     public static final int REPORT_TASKLIST_SETTINGS = 101001001;
     public static final int REPORT_TASKLIST_REFRESH = 101001002;
@@ -26,10 +27,6 @@ public class ReportConstant {
     public static final int REPORT_TASKLIST_UNCHECKTASK = 101002002;
     public static final int REPORT_TASKLIST_ADDTASK = 101002003;
     public static final int REPORT_TASKLIST_EDITTASK = 101002004;
-
-    //taskDetail中侧滑菜单操作，侧滑菜单的moduleId=011;
-    public static final int REPORT_TASKDETAIL_MENUSHOW = 102011001;
-    public static final int REPORT_TASKDETAIL_MENUHIDE = 102011002;
     //taskDetail中上方actionBar的按钮， actionBar的moduelId=001
     public static final int REPORT_TASKDETAIL_SETTINGS = 102001001;
     public static final int REPORT_TASKDETAIL_DELETE = 102001002;
@@ -37,7 +34,31 @@ public class ReportConstant {
     //taskDetail中中间的菜单按钮，page的moduleId=002;
     public static final int REPORT_TASKDETAIL_CHECKTASK = 102002001;
     public static final int REPORT_TASKDETAIL_UNCHECKTASK = 102002002;
-    public static final int REPORT_TASKDETAIL_EDITDATE = 102002003;
+
+//    底部菜单各个菜单点击
+    public static final int REPORT_MENU_ACTION = 103001001;
+    public static final int REPORT_MENU_TASK = 103001002;
+    public static final int REPORT_MENU_MY = 103001003;
+
+//    TemplateList 页面
+    public static final int REPORT_TEMPLATE_TABS_FOLLOW = 104002001;
+    public static final int REPORT_TEMPLATE_TABS_OTHER = 104002002;
+    public static final int REPORT_TEMPLATE_CLICK = 104003001;
+
+//    TemplateDetail页面
+    public static final int REPORT_TEMPLATEDETAIL_BACK = 105001001;
+    public static final int REPORT_TEMPLATEDETAIL_FOLLOW = 105001002;
+    public static final int REPORT_TEMPLATEDETAIL_MORE = 105002001;
+    public static final int REPORT_TEMPLATEDETAIL_POSTACTION = 105002002;
+    public static final int REPORT_TEMPLATEDETAIL_ADD = 105002003;
+
+//    ActionType Detail 页面
+    public static final int REPORT_ACTIONTYPE_DETAIL_BACK = 106001001;
+    public static final int REPORT_ACTIONTYPE_DETAIL_POSTACTION = 106002002;
+    public static final int REPORT_ACTIONTYPE_DETAIL_ADD = 106002003;
+
+//    PostAction Detail 页面
+    public static final int REPORT_POSTACTION_DETAIL_BACK = 107001001;
 
 //        //ActionCode
 //        public static final int REPORT_REQUEST = 0;

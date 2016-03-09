@@ -135,7 +135,7 @@ public class MineFragment extends BaseFragment {
     private void aboutUs(){
         Toast.makeText(getContext(), R.string.txt_about_us_cotent, Toast.LENGTH_SHORT).show();
         //添加打点上报代码
-        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_ABOUTUS);
+        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MY_ABOUTUS);
         mReport.saveOnClick(getContext(), mActionInfo);
         // TODO: 1/8/16 完成官方网站的web端，并打开官方网站。
     }
@@ -148,6 +148,10 @@ public class MineFragment extends BaseFragment {
         mTxtName.setText(null);
         mBtnLogin.setVisibility(View.VISIBLE);
         mBtnLogout.setVisibility(View.GONE);
+
+        //添加打点上报代码
+        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MY_LOGOUT);
+        mReport.saveOnClick(getContext(), mActionInfo);
     }
 
     //打开登录页面，包含QQ登录，微信登录，微博登录
@@ -155,6 +159,10 @@ public class MineFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), NewLoginActivity.class);
         intent.setAction("Login");
         startActivityForResult(intent, FIRST_REQUEST_CODE);
+
+        //添加打点上报代码
+        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_MY_LOGIN);
+        mReport.saveOnClick(getContext(), mActionInfo);
     }
     //处理NewLoginActivity的页面返回值
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

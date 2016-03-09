@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.stevenkcolin.xiaobaiju.R;
+import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.model.ActionType;
 import com.stevenkcolin.xiaobaiju.model.Template;
+import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.service.ActionService;
 import com.stevenkcolin.xiaobaiju.util.DialogUtil;
 import com.stevenkcolin.xiaobaiju.util.RenderUtil;
@@ -49,6 +52,31 @@ public class TemplateDetailActivity extends BaseActivity {
         //获得TemplateDetail详情
         new GetTemplateDetail().execute();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+//        //添加打点上报代码
+//        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TEMPLATEDETAIL_BACK);
+//        mReport.saveOnClick(getBaseContext(), mActionInfo);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ActionInfo mActionInfo;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //add settings code
+                //添加打点上报代码
+                mActionInfo = new ActionInfo(ReportConstant.REPORT_TEMPLATEDETAIL_FOLLOW);
+                mReport.saveOnClick(getApplicationContext(),mActionInfo);
+                return true;
+            default:
+        }
+        return true;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,5 +135,9 @@ public class TemplateDetailActivity extends BaseActivity {
         Intent intent = new Intent(this, PostActionDetail.class);
         intent.setAction("add");
         startActivity(intent);
+
+        //添加打点上报代码
+        ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TEMPLATEDETAIL_ADD);
+        mReport.saveOnClick(getBaseContext(), mActionInfo);
     }
 }

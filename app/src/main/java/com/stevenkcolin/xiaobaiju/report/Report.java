@@ -43,18 +43,18 @@ public class Report {
         report.actionParam3 = actionInfo.param3;
         //接口调用数据上报
         String reportLog = new StringBuffer().append("\nactionCode=======").append(report.actionCode).append("\nactionParam1=======").append(report.actionParam1).append("\nactionParam2=======").append(report.actionParam2).append("\nactionParam3=======").append(report.actionParam3).toString();
-        Log.d("report", reportLog);
+        Log.e("report", reportLog);
 
         report.appType = 1;
         report.appVer = CommonUtil.getVersionName(context);
         report.localId = CommonUtil.DeviceInfoUtility.getOnlyID(context);
         report.ip = CommonUtil.DeviceInfoUtility.getLocalHostIp(); //CommonUtility.getLocalHostIp();
-        Log.d("report","appver:"+report.appVer+"-----------"+"localId:"+report.localId+"----------"+"ip:"+report.ip);
+//        Log.e("report","appver:"+report.appVer+"-----------"+"localId:"+report.localId+"----------"+"ip:"+report.ip);
 
         report.deviceModel = CommonUtil.getDeviceModel(); //CommonUtility.getDeviceModel();
         report.os = CommonUtil.getOSVersion(); //CommonUtility.getOSVersion();
         report.actionTime = System.currentTimeMillis();
-        Log.d("report","deviceModel:"+report.deviceModel+"--------"+"os:"+report.os+"---------"+"actionTime:"+report.actionTime);
+//        Log.e("report","deviceModel:"+report.deviceModel+"--------"+"os:"+report.os+"---------"+"actionTime:"+report.actionTime);
 
         report.netType = CommonUtil.NetTypeUtility.getNetType(context); //CommonUtility.NetTypeUtility.getNetType(context);
         report.carrier = CommonUtil.NetTypeUtility.getCarrier(context); //CommonUtility.NetTypeUtility.getCarrier(context);
@@ -69,7 +69,7 @@ public class Report {
                 report.longitude = coordinate[1] + "";
             }
         }
-        Log.d("report", "netType:" + report.netType + "----------" + "carrier:" + report.carrier + "--------" + "channelId:" + report.channelId);
+//        Log.e("report", "netType:" + report.netType + "----------" + "carrier:" + report.carrier + "--------" + "channelId:" + report.channelId);
 
         ReportService reportService = new ReportService();
         reportService.report(report);

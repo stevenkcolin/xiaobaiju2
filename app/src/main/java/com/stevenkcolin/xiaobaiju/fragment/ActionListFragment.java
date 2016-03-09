@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.activity.LoginActivity;
 import com.stevenkcolin.xiaobaiju.activity.TemplateDetailActivity;
+import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.model.Template;
+import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.service.ActionService;
 import com.stevenkcolin.xiaobaiju.util.DialogUtil;
 
@@ -113,6 +115,11 @@ public class ActionListFragment extends BaseFragment {
                     b.putSerializable("template", template);
                     intent.putExtra("info", b);
                     startActivity(intent);
+
+                    //添加打点上报代码
+                    ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TEMPLATE_CLICK);
+                    mActionInfo.param1 = template.get_id().toString();
+                    mReport.saveOnClick(getContext(), mActionInfo);
                 }
             });
             if (i % 2 == 0) {

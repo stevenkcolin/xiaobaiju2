@@ -15,8 +15,11 @@ import android.widget.TextView;
 import com.stevenkcolin.xiaobaiju.R;
 import com.stevenkcolin.xiaobaiju.activity.ActionTypeDetail;
 import com.stevenkcolin.xiaobaiju.activity.PostActionDetail;
+import com.stevenkcolin.xiaobaiju.constant.ReportConstant;
 import com.stevenkcolin.xiaobaiju.model.ActionType;
 import com.stevenkcolin.xiaobaiju.model.PostAction;
+import com.stevenkcolin.xiaobaiju.report.ActionInfo;
+import com.stevenkcolin.xiaobaiju.report.Report;
 
 import java.util.List;
 
@@ -39,7 +42,7 @@ public class RenderUtil {
         layout.addView(imageView);
     }
 
-    public static void renderPostActionTitle(final Context context, PostAction postAction, ViewGroup layout) {
+    public static void renderPostActionTitle(final Context context, final PostAction postAction, ViewGroup layout) {
         TextView textView = new TextView(context);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         textView.setLayoutParams(lp);
@@ -53,6 +56,13 @@ public class RenderUtil {
                 intent.setAction("edit");
                 intent.putExtra("PostAction", editPostAction);
                 context.startActivity(intent);
+
+                //添加打点上报代码
+                Report mReport = Report.getInstance();
+                ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TEMPLATEDETAIL_POSTACTION);
+                mActionInfo.param1 = editPostAction.get_id().toString();
+                mReport.saveOnClick(context, mActionInfo);
+
             }
         });
         layout.addView(textView);
@@ -76,6 +86,12 @@ public class RenderUtil {
                 intent.setAction("edit");
                 intent.putExtra("PostAction", editPostAction);
                 context.startActivity(intent);
+
+                //添加打点上报代码
+                Report mReport = Report.getInstance();
+                ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TEMPLATEDETAIL_POSTACTION);
+                mActionInfo.param1 = editPostAction.get_id().toString();
+                mReport.saveOnClick(context, mActionInfo);
             }
         });
         layout.addView(imageView);
@@ -106,6 +122,12 @@ public class RenderUtil {
                 intent.setAction("view");
                 intent.putExtra("ActionType", actionType);
                 context.startActivity(intent);
+
+                //添加打点上报代码
+                Report mReport = Report.getInstance();
+                ActionInfo mActionInfo = new ActionInfo(ReportConstant.REPORT_TEMPLATEDETAIL_MORE);
+                mActionInfo.param1 = actionType.get_id().toString();
+                mReport.saveOnClick(context, mActionInfo);
             }
         });
         tmpLL.addView(textView);

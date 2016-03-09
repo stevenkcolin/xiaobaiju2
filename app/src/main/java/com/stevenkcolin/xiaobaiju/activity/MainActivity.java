@@ -49,25 +49,38 @@ public class MainActivity extends BaseActivity {
         rg.check(R.id.menu_action);
 
 
-
+        ActionInfo mActionInfo;
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                ActionInfo mActionInfo;
                 switch (checkedId) {
-//                    case R.id.menu_task:
-//                        mFragment = mFragmentTask;
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
-//                        changeMenuIcon(true, false, false);
-//                        break;
+                    case R.id.menu_task:
+                        mFragment = mFragmentTask;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
+                        changeMenuIcon(true, false, false);
+
+                        //添加打点上报代码
+                        mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_TASK);
+                        mReport.saveOnClick(getBaseContext(), mActionInfo);
+                        break;
                     case R.id.menu_action:
                         mFragment = mFragmentAction;
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
                         changeMenuIcon(false, true, false);
+
+                        //添加打点上报代码
+                        mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_ACTION);
+                        mReport.saveOnClick(getBaseContext(), mActionInfo);
                         break;
                     case R.id.menu_mine:
                         mFragment = mFragmentMine;
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mFragment).commit();
                         changeMenuIcon(false, false, true);
+
+                        //添加打点上报代码
+                        mActionInfo = new ActionInfo(ReportConstant.REPORT_MENU_MY);
+                        mReport.saveOnClick(getBaseContext(), mActionInfo);
                         break;
                     default:
                         break;
@@ -153,10 +166,10 @@ public class MainActivity extends BaseActivity {
     }
 
         private void changeMenuIcon(boolean main, boolean account, boolean more) {
-//            RadioButton radioMain = (RadioButton)findViewById(R.id.menu_task);
+            RadioButton radioMain = (RadioButton)findViewById(R.id.menu_task);
             RadioButton radioAccount = (RadioButton)findViewById(R.id.menu_action);
             RadioButton radioMore = (RadioButton)findViewById(R.id.menu_mine);
-//            radioMain.setChecked(main);
+            radioMain.setChecked(main);
             radioAccount.setChecked(account);
             radioMore.setChecked(more);
         }
