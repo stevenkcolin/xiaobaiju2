@@ -3,6 +3,8 @@ package com.stevenkcolin.xiaobaiju.util;
 import android.content.Context;
 import android.util.Log;
 
+import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -60,5 +62,11 @@ public class FileUtil {
             }
         }
         return result;
+    }
+
+    public static byte[] downloand(String filePath) throws Exception {
+        String url = GeneralConstant.SERVER_URL + GeneralConstant.ATTACHMENT_URI + GeneralConstant.ATTACHMENT_DOWNLOAD_URI + "?filepath=" + filePath;
+        byte[] bin = HttpUtil.sendHttpRequestWithBin(url, "GET", null);
+        return bin;
     }
 }

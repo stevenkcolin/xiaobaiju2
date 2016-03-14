@@ -7,6 +7,7 @@ import com.stevenkcolin.xiaobaiju.constant.GeneralConstant;
 import com.stevenkcolin.xiaobaiju.exception.ServerException;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,6 +98,56 @@ public class HttpUtil {
             }
             Object result = HttpResultUtil.checkResult(response.toString());
             return result;
+        } catch (Exception e) {
+            Log.e("HttpUtil", e.getMessage(), e);
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    public static byte[] sendHttpRequestWithBin(String address, String method, String body) throws ServerException, Exception {
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(address);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(GeneralConstant.CONN_TIMEOUT);
+            connection.setReadTimeout(GeneralConstant.READ_TIMEOUT);
+//            connection.setDoInput(true);
+            connection.setRequestMethod(method);
+            if (body != null) {
+                connection.setRequestProperty("content-type", "application/json");
+//                connection.setDoOutput(true);
+                DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                out.write(body.getBytes("UTF8"));
+            }
+
+            int status;
+            try {
+                status = connection.getResponseCode();
+            } catch (IOException e) {
+                status = connection.getResponseCode();
+            }
+            InputStream in = null;
+            if (status < 400) {
+                in = connection.getInputStream();
+            } else {
+                in = connection.getErrorStream();
+            }
+            byte[] result = new byte[1024];
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            int len = -1;
+            while((len = in.read(result)) != -1) {
+                outputStream.write(result, 0, len);
+            }
+            byte[] rest = outputStream.toByteArray();
+            outputStream.close();
+            in.close();
+//            in.read(result, 0, result.length);
+            return outputStream.toByteArray();
         } catch (Exception e) {
             Log.e("HttpUtil", e.getMessage(), e);
             e.printStackTrace();

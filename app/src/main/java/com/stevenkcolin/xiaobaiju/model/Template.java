@@ -10,6 +10,7 @@ public class Template implements Serializable {
     private String name;
     private String _id;
     private List<ActionType> actionTypeList;
+    private String background;
 
     public String getName() {
         return name;
@@ -33,5 +34,13 @@ public class Template implements Serializable {
 
     public void setActionTypeList(List<ActionType> actionTypeList) {
         this.actionTypeList = actionTypeList;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 }
