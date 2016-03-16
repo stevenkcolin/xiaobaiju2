@@ -15,4 +15,4 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep public class com.tencent.bugly.**{*;}
+#-keep public class com.tencent.bugly.**{*;}

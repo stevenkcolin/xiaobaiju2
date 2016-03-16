@@ -9,7 +9,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:1.5.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'com.tencent.bugly:symtabfileuploader:latest.release'  //其中latest.release为当前最新的Bugly插件版本号
+//        classpath 'com.tencent.bugly:symtabfileuploader:latest.release'  //其中latest.release为当前最新的Bugly插件版本号
     }
 }
 

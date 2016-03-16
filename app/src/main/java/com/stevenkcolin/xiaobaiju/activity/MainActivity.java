@@ -19,7 +19,6 @@ import com.stevenkcolin.xiaobaiju.fragment.TaskListFragment;
 import com.stevenkcolin.xiaobaiju.report.ActionInfo;
 import com.stevenkcolin.xiaobaiju.service.UserService;
 import com.stevenkcolin.xiaobaiju.util.FileUtil;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CrashReport.initCrashReport(this, "900018308", false);
+//        CrashReport.initCrashReport(this, "900018308", false);
         setContentView(R.layout.activity_main);
 
         mFragment = mFragmentAction;

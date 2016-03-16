@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'bugly'   //添加Bugly插件
+//apply plugin: 'bugly'   //添加Bugly插件
 
 android {
     compileSdkVersion 23
@@ -44,10 +44,10 @@ dependencies {
     compile files('libs/SocialSDK_QQZone_3.jar')
     compile files('libs/umeng_social_sdk.jar')
 
-    compile 'com.tencent.bugly:crashreport:latest.release'  //其中latest.release为当前最新的Bugly SDK版本号
+//    compile 'com.tencent.bugly:crashreport:latest.release'  //其中latest.release为当前最新的Bugly SDK版本号
 }
 
-bugly {
-    appId = '900018308'    //注册时分配的App ID
-    appKey = 'AgNB1OuiXQfJTLR8'  //注册时分配的App Key
-}
+//bugly {
+//    appId = '900018308'    //注册时分配的App ID
+//    appKey = 'AgNB1OuiXQfJTLR8'  //注册时分配的App Key
+//}
