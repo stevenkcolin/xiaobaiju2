@@ -127,6 +127,8 @@ public class ActionListFragment extends BaseFragment {
             }
             i++;
         }
+
+        tableRow = (TableRow)inflater.inflate(R.layout.sub_row_template, mTableLayoutMy, false);
         if (i % 2 == 0) {
             mTableLayoutMy.addView(tableRow);
         }
